@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "csstools.postcss",
+    "bradlc.vscode-tailwindcss",
+    "EditorConfig.EditorConfig",
+    "usernamehw.errorlens",
+    "GitHub.copilot",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-typescript-next",
+    "pmneo.tsimporter",
+    "biomejs.biome",
+    "stivo.tailwind-fold",
+    "aaron-bond.better-comments",
+    "million.million-lint",
+    "unifiedjs.vscode-mdx",
+    "mikestead.dotenv",
+    "christian-kohler.npm-intellisense"
+  ],
+  "unwantedRecommendations": []
+}
