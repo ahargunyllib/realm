@@ -12,7 +12,7 @@
     "astro": "^5.14.4"
   },
   "devDependencies": {
-    "@astrojs/ts-plugin": "^1.10.4",
+    "@astrojs/ts-plugin": "^1.10.5",
     "@realm/tsconfig": "workspace:*"
   }
 }
