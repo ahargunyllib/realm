@@ -260,3 +260,6 @@ $RECYCLE.BIN/
 # Nix
 .envrc
 .direnv/
+
+# Wrangler
+*.wrangler
