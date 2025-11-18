@@ -363,35 +363,81 @@ body {
   }
 
   .container {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
+    justify-content: center;
+  }
+
+  .content {
+    width: 100%;
+    padding: 0 var(--spacing-sm);
+  }
+
+  .headline {
+    font-size: clamp(2rem, 12vw, 3rem);
   }
 
   .cta-button {
     padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.875rem;
   }
 
   .headline-frame::before,
   .headline-frame::after {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 
   .line-decoration::before {
-    width: 150px;
+    width: 120px;
+  }
+
+  .button-corner {
+    width: 10px;
+    height: 10px;
   }
 }
 
 @media (width <= 480px) {
+  .container {
+    padding: var(--spacing-xs);
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .headline {
+    font-size: clamp(1.75rem, 10vw, 2.5rem);
+    margin-bottom: var(--spacing-md);
+  }
+
   .subheading {
-    font-size: var(--font-size-base);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-lg);
   }
 
   .headline-frame {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .headline-frame::before,
+  .headline-frame::after {
+    width: 20px;
+    height: 20px;
   }
 
   .line-decoration::before {
-    width: 100px;
+    width: 80px;
+  }
+
+  .cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .button-corner {
+    width: 8px;
+    height: 8px;
   }
 }
 
