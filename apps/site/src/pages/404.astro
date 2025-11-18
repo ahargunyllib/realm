@@ -8,7 +8,7 @@ import "@/styles/index.css";
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content={Astro.generator}>
-    <meta name="description" content="Nugraha Billy Viandy - Portfolio website">
+    <meta name="description" content="Page not found - 404 error">
     <meta name="theme-color" content="#0a0a0a">
 
     <!-- Favicons -->
@@ -20,13 +20,10 @@ import "@/styles/index.css";
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content={`${APP_NAME} - Portfolio`}>
-    <meta
-      property="og:description"
-      content="Nugraha Billy Viandy - Portfolio website"
-    >
+    <meta property="og:title" content={`404 - ${APP_NAME}`}>
+    <meta property="og:description" content="Page not found">
 
-    <title>Portfolio</title>
+    <title>404 - {APP_NAME}</title>
 
     <!-- Preconnect to Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,17 +46,17 @@ import "@/styles/index.css";
 
       <div class="content">
         <h1 class="headline">
-          <span class="headline-frame">Under Construction</span>
+          <span class="headline-frame">404 Not Found</span>
         </h1>
 
         <p class="subheading">
-          Building something exceptional. Stay tuned for updates.
+          The page you're looking for doesn't exist or has been moved.
         </p>
 
         <!-- Decorative connecting line -->
         <div class="line-decoration" aria-hidden="true"></div>
 
-        <a href="#" class="cta-button" aria-label="View my CV">
+        <a href="/" class="cta-button" aria-label="Go back to home">
           <span
             class="button-corner button-corner-tr"
             aria-hidden="true"
@@ -68,7 +65,7 @@ import "@/styles/index.css";
             class="button-corner button-corner-bl"
             aria-hidden="true"
           ></span>
-          View My CV
+          Back to Home
           <span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -82,7 +79,7 @@ import "@/styles/index.css";
         document.querySelector<HTMLDivElement>(".cursor-follower");
 
       if (cursorFollower) {
-        let idleTimeout: NodeJS.Timeout | null = null;
+        let idleTimeout = 0;
 
         // Update cursor position
         document.addEventListener("mousemove", (e) => {
@@ -93,20 +90,16 @@ import "@/styles/index.css";
           cursorFollower.classList.remove("cursor-follower-idle");
 
           // Reset idle timer
-          if (idleTimeout) {
-            clearTimeout(idleTimeout);
-          }
+          clearTimeout(idleTimeout);
           idleTimeout = setTimeout(() => {
             cursorFollower.classList.add("cursor-follower-idle");
-          }, 3500);
+          }, 1500);
         });
 
         // Hide cursor follower when mouse leaves window
         document.addEventListener("mouseleave", () => {
           cursorFollower.style.opacity = "0";
-          if (idleTimeout) {
-            clearTimeout(idleTimeout);
-          }
+          clearTimeout(idleTimeout);
         });
 
         document.addEventListener("mouseenter", () => {
