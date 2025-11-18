@@ -1,9 +1,48 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite"],
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/dist",
+      "!**/.turbo",
+      "!**/dev-dist",
+      "!**/.zed",
+      "!**/.vscode",
+      "!**/routeTree.gen.ts",
+      "!**/src-tauri",
+      "!**/.nuxt",
+      "!bts.jsonc",
+      "!**/.expo",
+      "!**/.wrangler",
+      "!**/.alchemy",
+      "!**/.svelte-kit",
+      "!**/wrangler.jsonc",
+      "!**/.source",
+      "!**/worker-configuration.d.ts"
+    ]
+  },
+  "extends": [
+    "ultracite/core",
+    "ultracite/react",
+    "ultracite/astro",
+    "ultracite/remix"
+  ],
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off"
+      }
+    }
+  },
   "overrides": [
     {
-      "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
+      "includes": [
+        "**/*.svelte",
+        "**/*.astro",
+        "**/*.vue"
+      ],
       "linter": {
         "rules": {
           "style": {
@@ -13,6 +52,26 @@
           "correctness": {
             "noUnusedVariables": "off",
             "noUnusedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/server/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/**"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off"
           }
         }
       }
