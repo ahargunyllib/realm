@@ -1,0 +1,25 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "realm-site",
+	"main": "dist/_worker.js/index.js",
+	"compatibility_date": "2025-11-09",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist"
+	},
+	"workers_dev": false,
+	"preview_urls": true,
+	"observability": {
+		"enabled": true
+	},
+	"routes": [
+		{
+			"pattern": "ahargunyllib.dev",
+			"custom_domain": true
+		}
+	]
+}
