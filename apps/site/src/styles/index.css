@@ -1,0 +1,402 @@
+/* Modern Futuristic Coming Soon Page */
+
+/* Import Google Fonts - Multiple fonts for hierarchy */
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap");
+
+/* CSS Custom Properties */
+:root {
+  /* Colors - Pure monochrome */
+  --color-bg: #0a0a0a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-line: rgba(255, 255, 255, 0.15);
+  --color-line-bright: rgba(255, 255, 255, 0.3);
+  --color-button-border: rgba(255, 255, 255, 0.25);
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+
+  /* Typography */
+  --font-display: "Rajdhani", sans-serif;
+  --font-body:
+    "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+  --font-size-4xl: 4rem;
+  --font-size-5xl: 6rem;
+}
+
+/* Reset and Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Main container - centered content */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  text-align: center;
+  position: relative;
+}
+
+/* Content wrapper */
+.content {
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Headline - Bold geometric font */
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(var(--font-size-3xl), 10vw, var(--font-size-5xl));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-lg);
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* Decorative frame around headline */
+.headline-frame {
+  position: relative;
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* Corner brackets */
+.headline-frame::before,
+.headline-frame::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--color-line);
+}
+
+.headline-frame::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.headline-frame::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Subheading - Cleaner font */
+.subheading {
+  font-family: var(--font-body);
+  font-size: clamp(var(--font-size-base), 2.5vw, var(--font-size-lg));
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Decorative line container */
+.line-decoration {
+  position: relative;
+  margin: var(--spacing-xl) 0;
+}
+
+/* Horizontal connecting line */
+.line-decoration::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* CTA Button */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  background: transparent;
+  border: 2px solid var(--color-button-border);
+  border-radius: 0;
+  cursor: pointer;
+  position: relative;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Button corner accents */
+.cta-button::before,
+.cta-button::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-line-bright);
+}
+
+.cta-button::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.cta-button::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Additional button corners using spans */
+.button-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-line-bright);
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.button-corner-tr {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.button-corner-bl {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.cta-button:hover .button-corner {
+  border-color: var(--color-text-primary);
+}
+
+/* Arrow icon */
+.arrow {
+  display: inline-block;
+  font-size: 1.2em;
+}
+
+/* Button hover effect */
+.cta-button {
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  border-color: var(--color-text-primary);
+  transform: scale(1.05);
+}
+
+.cta-button:hover::before,
+.cta-button:hover::after {
+  border-color: var(--color-text-primary);
+}
+
+/* Background decorative grid */
+.bg-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Side decorative elements */
+.side-decoration {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 200px;
+  opacity: 0.5;
+}
+
+.side-decoration-left {
+  left: 10%;
+  border-left: 1px solid var(--color-line);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.side-decoration-right {
+  right: 10%;
+  border-right: 1px solid var(--color-line);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* Connection nodes - Plus symbols */
+.side-decoration::before,
+.side-decoration::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background:
+    linear-gradient(var(--color-text-primary) 0 0) center / 2px 100% no-repeat,
+    linear-gradient(var(--color-text-primary) 0 0) center / 100% 2px no-repeat;
+}
+
+.side-decoration-left::before {
+  top: -3px;
+  left: -4px;
+}
+
+.side-decoration-left::after {
+  bottom: -3px;
+  left: -4px;
+}
+
+.side-decoration-right::before {
+  top: -3px;
+  right: -4px;
+}
+
+.side-decoration-right::after {
+  bottom: -3px;
+  right: -4px;
+}
+
+/* Cursor follower with reverse filter */
+.cursor-follower {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-text-primary);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.2s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+/* Cursor hover state - scales up over interactive elements */
+.cursor-follower-hover {
+  transform: translate(-50%, -50%) scale(1.8);
+}
+
+/* Cursor idle state - pulse animation */
+.cursor-follower-idle {
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+
+/* Pulse animation for idle cursor */
+@keyframes cursorPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* Responsive adjustments */
+@media (width <= 1024px) {
+  .side-decoration {
+    display: none;
+  }
+}
+
+@media (width <= 768px) {
+  :root {
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  .cta-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
+
+  .headline-frame::before,
+  .headline-frame::after {
+    width: 40px;
+    height: 40px;
+  }
+
+  .line-decoration::before {
+    width: 150px;
+  }
+}
+
+@media (width <= 480px) {
+  .subheading {
+    font-size: var(--font-size-base);
+  }
+
+  .headline-frame {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .line-decoration::before {
+    width: 100px;
+  }
+}
+
+/* Focus styles for accessibility */
+.cta-button:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 4px;
+}
