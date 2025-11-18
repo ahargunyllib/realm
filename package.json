@@ -11,7 +11,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.3.6",
     "lefthook": "^2.0.4",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "ultracite": "6.3.4"
   },
   "lint-staged": {
@@ -20,6 +20,8 @@
     ]
   },
   "scripts": {
+    "build": "pnpm --filter='!./apps/*' build",
+    "dev": "pnpm --parallel --filter='./apps/*' dev",
     "check": "pnpm dlx ultracite@latest check",
     "fix": "pnpm dlx ultracite@latest fix"
   }
