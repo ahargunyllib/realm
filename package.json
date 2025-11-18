@@ -20,8 +20,6 @@
     ]
   },
   "scripts": {
-    "build": "pnpm --filter='!./apps/*' build",
-    "dev": "pnpm --parallel --filter='./apps/*' dev",
     "check": "pnpm dlx ultracite@latest check",
     "fix": "pnpm dlx ultracite@latest fix"
   }

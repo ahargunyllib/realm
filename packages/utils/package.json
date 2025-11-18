@@ -11,12 +11,8 @@
       "default": "./src/*.ts"
     }
   },
-  "scripts": {
-    "build": "tsdown"
-  },
   "devDependencies": {
     "@realm/tsconfig": "workspace:*",
-    "tsdown": "catalog:",
     "typescript": "catalog:"
   }
 }
