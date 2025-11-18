@@ -1,15 +1,7 @@
 {
-  "extends": [
-    "astro/tsconfigs/strict",
-    "@realm/tsconfig/base.json"
-  ],
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "extends": ["astro/tsconfigs/strict", "@realm/tsconfig/base.json"],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "plugins": [
       {
@@ -17,9 +9,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "strictNullChecks": true
   }
