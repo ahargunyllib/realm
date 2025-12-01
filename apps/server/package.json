@@ -16,6 +16,6 @@
   "devDependencies": {
     "@realm/tsconfig": "workspace:*",
     "typescript": "catalog:",
-    "wrangler": "^4.40.3"
+    "wrangler": "^4.51.0"
   }
 }
