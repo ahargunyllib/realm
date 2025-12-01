@@ -10,7 +10,7 @@
     "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.11",
+    "@astrojs/cloudflare": "^12.6.12",
     "astro": "^5.14.4"
   },
   "devDependencies": {
