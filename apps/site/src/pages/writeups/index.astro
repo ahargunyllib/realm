@@ -1,0 +1,104 @@
+---
+import Footer from "@/components/Footer.astro";
+import Layout from "@/components/Layout.astro";
+import Section from "@/components/Section.astro";
+import { writeups } from "@/data/writeups";
+
+const sortedWriteups = writeups.sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+---
+
+<Layout
+  title="Writeups - Nugraha Billy Viandy"
+  description="CTF and competitive programming writeups with solutions and explanations."
+  canonical="https://ahargunyllib.dev/writeups"
+>
+  <Section>
+    <h1>Writeups</h1>
+    <p class="text-secondary" style="margin-bottom: 48px;">
+      Solutions and explanations for CTF challenges and competitive programming
+      problems.
+    </p>
+
+    {
+      sortedWriteups.length > 0 ? (
+        <div class="writeups-list">
+          {sortedWriteups.map((writeup) => (
+            <article class="writeup-item">
+              <a href={`/writeups/${writeup.slug}`}>
+                <h2>{writeup.title}</h2>
+              </a>
+              <div class="writeup-meta text-small text-tertiary">
+                <span>{writeup.competition}</span>
+                {" · "}
+                <span class="capitalize">{writeup.category}</span>
+                {writeup.difficulty && (
+                  <>
+                    {" · "}
+                    <span class="capitalize">{writeup.difficulty}</span>
+                  </>
+                )}
+                {" · "}
+                <span>
+                  {new Date(writeup.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+              <div class="writeup-tags mono text-tertiary">
+                {writeup.tags.join(" · ")}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <p class="text-secondary">No writeups yet. Coming soon.</p>
+        </div>
+      )
+    }
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .writeups-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .writeup-item {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .writeup-item:last-child {
+    border-bottom: none;
+  }
+
+  .writeup-item h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .writeup-meta {
+    margin-bottom: var(--space-2);
+  }
+
+  .writeup-tags {
+    font-size: var(--text-small);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+</style>

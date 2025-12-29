@@ -1,0 +1,90 @@
+---
+import type { Project } from "@/data/types";
+
+type Props = {
+  items: Project[];
+};
+
+const { items } = Astro.props;
+---
+
+{
+  items.length === 0 ? (
+    <div class="empty-state">
+      <p class="text-secondary">No projects yet. Check back soon.</p>
+    </div>
+  ) : (
+    <div class="projects-list">
+      {items.map((project) => (
+        <article class="project-item">
+          <h3 class="project-title">{project.name}</h3>
+          <p class="project-description text-secondary">
+            {project.description}
+          </p>
+          <p class="project-stack mono text-tertiary">
+            {project.techStack.join(" · ")}
+          </p>
+          {(project.githubUrl ?? project.liveUrl) && (
+            <div class="project-links">
+              {project.githubUrl && (
+                <a href={project.githubUrl} class="project-link text-small">
+                  → GitHub
+                </a>
+              )}
+              {project.liveUrl && (
+                <a href={project.liveUrl} class="project-link text-small">
+                  → Live
+                </a>
+              )}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .project-item {
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .project-title {
+    margin-bottom: var(--space-1);
+  }
+
+  .project-description {
+    margin-bottom: var(--space-2);
+    line-height: var(--leading-relaxed);
+  }
+
+  .project-stack {
+    margin-bottom: var(--space-2);
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .project-link {
+    color: var(--color-text-primary);
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import Layout from "@/components/Layout.astro";
+import Section from "@/components/Section.astro";
+---
+
+<Layout
+  title="404 - Page Not Found | Nugraha Billy Viandy"
+  description="Page not found."
+>
+  <Section>
+    <div class="not-found">
+      <h1 class="error-code">404</h1>
+      <p class="error-message">Page not found</p>
+      <p class="error-description text-secondary">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <nav class="error-nav">
+        <a href="/" class="back-link">← Back to home</a>
+      </nav>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100dvh;
+    padding: var(--space-12) 0;
+  }
+
+  .error-code {
+    font-size: 96px;
+    line-height: 1;
+    margin-bottom: var(--space-2);
+    color: var(--color-text-primary);
+  }
+
+  .error-message {
+    font-size: var(--text-h1);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  .error-description {
+    max-width: 480px;
+    margin-bottom: var(--space-6);
+  }
+
+  .error-nav {
+    margin-top: var(--space-4);
+  }
+
+  .back-link {
+    font-size: var(--text-small);
+  }
+
+  @media (max-width: 640px) {
+    .error-code {
+      font-size: 72px;
+    }
+  }
+</style>

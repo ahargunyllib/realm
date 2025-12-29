@@ -1,0 +1,109 @@
+---
+import { getLatestProblem } from "@/data/competitive";
+import { getLatestWriteup } from "@/data/writeups";
+
+const latestProblem = getLatestProblem();
+const latestWriteup = getLatestWriteup();
+
+const formatTimeAgo = (timestamp: string): string => {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now.getTime() - past.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return "Today";
+  }
+  if (diffDays === 1) {
+    return "Yesterday";
+  }
+  if (diffDays < 7) {
+    return `${diffDays} days ago`;
+  }
+  if (diffDays < 30) {
+    return `${Math.floor(diffDays / 7)} weeks ago`;
+  }
+  return `${Math.floor(diffDays / 30)} months ago`;
+};
+
+const getPlatformDisplay = (platform: string): string => {
+  const displays: Record<string, string> = {
+    codeforces: "Codeforces",
+    leetcode: "LeetCode",
+    tlx: "TLX",
+  };
+  return displays[platform] ?? platform;
+};
+---
+
+{
+  !latestProblem && !latestWriteup ? (
+    <div class="empty-state">
+      <p class="text-secondary">No recent activity yet. Check back soon.</p>
+    </div>
+  ) : (
+    <div class="recent-activity">
+      {latestProblem && (
+        <div class="activity-item">
+          <p class="activity-label text-tertiary text-small">
+            Last Solved CP Problem
+          </p>
+          <a href={latestProblem.url} class="activity-content">
+            {latestProblem.problemName}
+          </a>
+          <p class="activity-meta mono text-tertiary">
+            {getPlatformDisplay(latestProblem.platform)} ·{" "}
+            {formatTimeAgo(latestProblem.timestamp)}
+          </p>
+        </div>
+      )}
+
+      {latestWriteup && (
+        <div class="activity-item">
+          <p class="activity-label text-tertiary text-small">Last Writeup</p>
+          <a href={`/writeups/${latestWriteup.slug}`} class="activity-content">
+            {latestWriteup.title}
+          </a>
+          <p class="activity-meta mono text-tertiary">
+            {latestWriteup.competition} · {formatTimeAgo(latestWriteup.date)}
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+
+  .recent-activity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .activity-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .activity-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .activity-content {
+    font-size: var(--text-body);
+    font-weight: 500;
+    line-height: var(--leading-normal);
+  }
+
+  .activity-meta {
+    font-size: var(--text-small);
+  }
+</style>

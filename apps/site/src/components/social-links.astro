@@ -1,0 +1,83 @@
+---
+import type { SocialLink, SocialCategory } from "@/data/types";
+
+type Props = {
+  items: SocialLink[];
+};
+
+const { items } = Astro.props;
+
+const groupedLinks = items.reduce(
+  (acc, link) => {
+    if (!acc[link.category]) {
+      acc[link.category] = [];
+    }
+    acc[link.category].push(link);
+    return acc;
+  },
+  {} as Record<SocialCategory, SocialLink[]>
+);
+
+const categoryLabels: Record<SocialCategory, string> = {
+  development: "Development",
+  security: "Security",
+  competitive: "Competitive",
+};
+---
+
+<div class="social-grid">
+  {
+    Object.entries(groupedLinks).map(([category, links]) => (
+      <div class="social-category">
+        <h3 class="category-title text-small text-tertiary">
+          {categoryLabels[category as SocialCategory]}
+        </h3>
+        <div class="category-links">
+          {links.map((link) => (
+            <a href={link.url} class="social-link">
+              {link.platform}
+            </a>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .social-category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .category-title {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-1);
+  }
+
+  .category-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .social-link {
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+  }
+
+  @media (max-width: 640px) {
+    .social-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

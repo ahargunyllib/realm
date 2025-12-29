@@ -1,0 +1,292 @@
+---
+import type { Experience, ExperienceType } from "@/data/types";
+
+type Props = {
+  items: Experience[];
+};
+
+const { items } = Astro.props;
+
+const formatDateRange = (start: string, end: string | null): string => {
+  const formatMonth = (dateStr: string) => {
+    const [year, month] = dateStr.split("-");
+    if (!(year && month)) {
+      return dateStr;
+    }
+
+    const date = new Date(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10) - 1
+    );
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  };
+
+  const startFormatted = formatMonth(start);
+  const endFormatted = end === null ? "Present" : formatMonth(end);
+
+  return `${startFormatted} - ${endFormatted}`;
+};
+
+const formatType = (type: ExperienceType): string => {
+  const typeMap: Record<ExperienceType, string> = {
+    "full-time": "Full-time",
+    internship: "Internship",
+    contract: "Contract",
+    volunteer: "Volunteer",
+  };
+  return typeMap[type];
+};
+---
+
+{
+  items.length === 0 ? (
+    <div class="empty-state">
+      <p class="text-secondary">No experience yet. Check back soon.</p>
+    </div>
+  ) : (
+    <>
+      <div class="experience-list">
+        {items.map((item, index) => (
+          <article
+            class="experience-item"
+            data-visible={index < 2 ? "true" : "false"}
+          >
+            <div class="experience-header">
+              <div class="experience-header-content">
+                <h3 class="experience-title">
+                  {item.role} · {item.organization}
+                </h3>
+                <span class="experience-type text-small">
+                  {formatType(item.type)}
+                </span>
+              </div>
+              <button
+                class="experience-toggle text-small"
+                data-toggle={`exp-${index}`}
+                aria-expanded="false"
+              >
+                Show Details
+              </button>
+            </div>
+            <p class="experience-date text-tertiary text-small">
+              {formatDateRange(item.startDate, item.endDate)}
+            </p>
+            <div
+              class="experience-details"
+              data-details={`exp-${index}`}
+              data-expanded="false"
+            >
+              <p class="experience-description text-secondary">
+                {item.description}
+              </p>
+              {item.technologies && item.technologies.length > 0 && (
+                <div class="experience-technologies">
+                  {item.technologies.map((tech) => (
+                    <span class="tech-tag text-small">{tech}</span>
+                  ))}
+                </div>
+              )}
+              {item.highlights && item.highlights.length > 0 && (
+                <ul class="experience-highlights text-secondary">
+                  {item.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      {items.length > 2 && (
+        <button class="show-more-btn" id="show-more-experiences">
+          Show More ({items.length - 2} remaining)
+        </button>
+      )}
+    </>
+  )
+}
+
+<script>
+  const toggleButtons = document.querySelectorAll("[data-toggle]");
+
+  for (const button of toggleButtons) {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-toggle");
+      const detailsSection = document.querySelector(
+        `[data-details="${targetId}"]`
+      );
+
+      if (detailsSection) {
+        const isExpanded =
+          detailsSection.getAttribute("data-expanded") === "true";
+
+        if (isExpanded) {
+          detailsSection.setAttribute("data-expanded", "false");
+          button.setAttribute("aria-expanded", "false");
+          button.textContent = "Show Details";
+        } else {
+          detailsSection.setAttribute("data-expanded", "true");
+          button.setAttribute("aria-expanded", "true");
+          button.textContent = "Hide Details";
+        }
+      }
+    });
+  }
+
+  const showMoreBtn = document.getElementById("show-more-experiences");
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener("click", () => {
+      const allItems = document.querySelectorAll(".experience-item");
+      const hiddenItems = Array.from(allItems).filter(
+        (item) => item.getAttribute("data-visible") === "false"
+      );
+
+      // Show next 2 items
+      for (const item of hiddenItems.slice(0, 2)) {
+        item.setAttribute("data-visible", "true");
+      }
+
+      // Update button text or hide if all visible
+      const remainingCount = hiddenItems.length - 2;
+      if (remainingCount <= 0) {
+        showMoreBtn.style.display = "none";
+      } else {
+        showMoreBtn.textContent = `Show More (${remainingCount} remaining)`;
+      }
+    });
+  }
+</script>
+
+<style>
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .experience-item {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-3);
+  }
+
+  .experience-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .experience-header-content {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .experience-title {
+    margin: 0;
+  }
+
+  .experience-type {
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .experience-toggle {
+    background: none;
+    border: none;
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .experience-toggle:hover {
+    color: var(--color-text-primary);
+  }
+
+  .experience-date {
+    margin-bottom: var(--space-2);
+  }
+
+  .experience-details {
+    overflow: hidden;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .experience-details[data-expanded="true"] {
+    max-height: 2000px;
+    opacity: 1;
+  }
+
+  .experience-description {
+    margin-bottom: var(--space-2);
+    line-height: var(--leading-relaxed);
+  }
+
+  .experience-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .tech-tag {
+    padding: 2px 8px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .experience-highlights {
+    margin: 0;
+    padding-left: var(--space-4);
+    line-height: var(--leading-relaxed);
+  }
+
+  .experience-highlights li {
+    margin-bottom: var(--space-1);
+  }
+
+  .experience-highlights li:last-child {
+    margin-bottom: 0;
+  }
+
+  .experience-item[data-visible="false"] {
+    display: none;
+  }
+
+  .show-more-btn {
+    display: block;
+    margin: var(--space-4) auto 0;
+    padding: var(--space-2) var(--space-3);
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: var(--text-small);
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .show-more-btn:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+  }
+</style>

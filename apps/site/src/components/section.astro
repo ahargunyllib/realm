@@ -1,0 +1,27 @@
+---
+type Props = {
+  id?: string;
+  title?: string;
+};
+
+const { id, title } = Astro.props;
+---
+
+<section id={id} class="section">
+  {title && <h2 class="section-title">{title}</h2>}
+  <slot/>
+</section>
+
+<style>
+  .section {
+    margin-bottom: var(--section-spacing);
+  }
+
+  .section:last-child {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-6);
+  }
+</style>

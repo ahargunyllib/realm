@@ -1,0 +1,109 @@
+---
+import Footer from "@/components/Footer.astro";
+import Layout from "@/components/Layout.astro";
+import Section from "@/components/Section.astro";
+
+import type { UsesCategory } from "@/data/types";
+import { uses } from "@/data/uses";
+
+const groupedUses = uses.reduce(
+  (acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item);
+    return acc;
+  },
+  {} as Record<UsesCategory, typeof uses>
+);
+
+const categoryLabels: Record<UsesCategory, string> = {
+  hardware: "Hardware",
+  os: "Operating System",
+  software: "Software",
+};
+
+const categoryOrder: UsesCategory[] = ["hardware", "os", "software"];
+---
+
+<Layout
+  title="Uses - Nugraha Billy Viandy"
+  description="Tools, software, and hardware I use for development, security research, and competitive programming."
+  canonical="https://ahargunyllib.dev/uses"
+>
+  <Section>
+    <h1>Uses</h1>
+    <p class="text-secondary" style="margin-bottom: 48px;">
+      Tools, software, and hardware I use for development, security research,
+      and competitive programming.
+    </p>
+
+    {
+      categoryOrder
+        .filter((category) => groupedUses[category])
+        .map((category) => (
+          <div class="uses-category">
+            <h2 class="category-title">{categoryLabels[category]}</h2>
+            <div class="uses-list">
+              {groupedUses[category].map((item) => (
+                <div class="use-item">
+                  {item.url ? (
+                    <a href={item.url} class="use-name">
+                      {item.name}
+                    </a>
+                  ) : (
+                    <span class="use-name">{item.name}</span>
+                  )}
+                  <p class="use-description text-secondary">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+    }
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .uses-category {
+    margin-bottom: var(--space-8);
+  }
+
+  .uses-category:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .category-title {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .uses-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .use-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .use-name {
+    font-weight: 500;
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+  }
+
+  .use-description {
+    margin-bottom: 0;
+    line-height: var(--leading-relaxed);
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+import { socialLinks } from "@/data/social";
+import { profile } from "@/data/profile";
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <p class="footer-tagline">Code. Security. Growth.</p>
+
+  <nav class="footer-nav">
+    <div class="nav-column">
+      <a href="/">Home</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#projects">Projects</a>
+    </div>
+    <div class="nav-column">
+      <a href="/blogs">Blogs</a>
+      <a href="/writeups">Writeups</a>
+      <a href="/solutions">Solutions</a>
+      <a href="/shorts">Shorts</a>
+    </div>
+    <div class="nav-column">
+      <a href="/uses">Uses</a>
+      <a href="/status">Status</a>
+    </div>
+  </nav>
+
+  <div class="footer-connect">
+    <h3 class="connect-title text-small text-tertiary">Connect</h3>
+    <div class="connect-links">
+      <a href={`mailto:${profile.email}`} class="connect-link text-small">
+        Email
+      </a>
+      {
+        socialLinks.map((link) => (
+          <a href={link.url} class="connect-link text-small">
+            {link.platform}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <p class="footer-copyright text-tertiary">
+    © {currentYear}Nugraha Billy Viandy
+  </p>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--section-spacing);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-tagline {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-8);
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6) var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .nav-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .nav-column a {
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+    color: var(--color-text-primary);
+  }
+
+  .footer-connect {
+    margin-bottom: var(--space-8);
+  }
+
+  .connect-title {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+  }
+
+  .connect-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .connect-link {
+    color: var(--color-text-primary);
+  }
+
+  .footer-copyright {
+    font-size: var(--text-small);
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    .footer-nav {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>
