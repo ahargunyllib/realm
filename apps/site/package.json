@@ -16,6 +16,6 @@
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.4",
     "@realm/tsconfig": "workspace:*",
-    "wrangler": "^4.49.0"
+    "wrangler": "^4.54.0"
   }
 }
