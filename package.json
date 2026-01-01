@@ -12,7 +12,7 @@
     "@biomejs/biome": "2.3.6",
     "lefthook": "^2.0.4",
     "typescript": "catalog:",
-    "ultracite": "6.3.4"
+    "ultracite": "6.5.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
