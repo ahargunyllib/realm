@@ -6,7 +6,7 @@ export const experiences: Experience[] = [
     organization: "POSGYM DIGITAL ASIA",
     type: "full-time",
     startDate: "2024-11",
-    endDate: null,
+    endDate: "2025-07",
     description:
       "Led the migration of a legacy React Native application to Expo, including major refactoring and a full redesign to improve stability, maintainability, and user experience.",
     technologies: ["React Native", "Expo", "TypeScript", "Firebase"],
@@ -54,21 +54,6 @@ export const experiences: Experience[] = [
     ],
   },
   {
-    role: "Mobile Development Mentor",
-    organization:
-      "Google Developer Groups (GDGs) on Campus - Brawijaya University",
-    type: "volunteer",
-    startDate: "2024-11",
-    endDate: "2025-04",
-    description:
-      "Mentored community members in mobile application development using Flutter, guiding them through fundamental concepts, best practices, and hands-on project implementation.",
-    technologies: ["Flutter", "Dart", "Mobile Development"],
-    highlights: [
-      "Guided members in building functional Flutter applications from scratch",
-      "Provided hands-on mentoring during workshops and practice sessions",
-    ],
-  },
-  {
     role: "Frontend Web Developer",
     organization: "TEDxUniversitasBrawijaya",
     type: "contract",
@@ -83,7 +68,7 @@ export const experiences: Experience[] = [
     ],
   },
   {
-    role: "Full Stack Developer / Project Manager",
+    role: "Full Stack Developer",
     organization: "Intrivia UB",
     type: "contract",
     startDate: "2024-06",
