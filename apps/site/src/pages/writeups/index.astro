@@ -1,11 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import Footer from "@/components/footer.astro";
 import Layout from "@/components/layout.astro";
 import Section from "@/components/section.astro";
-import { writeups } from "@/data/writeups";
 
-const sortedWriteups = writeups.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+const writeupEntries = await getCollection("writeup");
+const sortedWriteups = writeupEntries.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 ---
 
@@ -23,24 +24,24 @@ const sortedWriteups = writeups.sort(
 
     {sortedWriteups.length > 0 ? (
         <div class="writeups-list">
-          {sortedWriteups.map((writeup) => (
+          {sortedWriteups.map((entry) => (
             <article class="writeup-item">
-              <a href={`/writeups/${writeup.slug}`}>
-                <h2>{writeup.title}</h2>
+              <a href={`/writeups/${entry.slug}`}>
+                <h2>{entry.data.title}</h2>
               </a>
               <div class="writeup-meta text-small text-tertiary">
-                <span>{writeup.competition}</span>
+                <span>{entry.data.competition}</span>
                 {" · "}
-                <span class="capitalize">{writeup.category}</span>
-                {writeup.difficulty && (
+                <span class="capitalize">{entry.data.category.join(" · ")}</span>
+                {entry.data.difficulty && (
                   <>
                     {" · "}
-                    <span class="capitalize">{writeup.difficulty}</span>
+                    <span class="capitalize">{entry.data.difficulty}</span>
                   </>
                 )}
                 {" · "}
                 <span>
-                  {new Date(writeup.date).toLocaleDateString("en-US", {
+                  {new Date(entry.data.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
@@ -48,7 +49,7 @@ const sortedWriteups = writeups.sort(
                 </span>
               </div>
               <div class="writeup-tags mono text-tertiary">
-                {writeup.tags.join(" · ")}
+                {entry.data.tags.join(" · ")}
               </div>
             </article>
           ))}

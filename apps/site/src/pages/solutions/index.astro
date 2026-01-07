@@ -1,11 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import Footer from "@/components/footer.astro";
 import Layout from "@/components/layout.astro";
 import Section from "@/components/section.astro";
-import { solutions } from "@/data/solutions";
 
-const sortedSolutions = solutions.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+const solutionEntries = await getCollection("solution");
+const sortedSolutions = solutionEntries.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
 const getPlatformDisplay = (platform: string): string => {
@@ -37,18 +38,18 @@ const getPlatformDisplay = (platform: string): string => {
         </div>
       ) : (
         <div class="solutions-list">
-          {sortedSolutions.map((solution) => (
+          {sortedSolutions.map((entry) => (
             <article class="solution-item">
-              <a href={`/solutions/${solution.slug}`}>
-                <h2>{solution.title}</h2>
+              <a href={`/solutions/${entry.slug}`}>
+                <h2>{entry.data.title}</h2>
               </a>
               <div class="solution-meta text-small text-tertiary">
-                <span>{getPlatformDisplay(solution.platform)}</span>
+                <span>{getPlatformDisplay(entry.data.platform)}</span>
                 {" · "}
-                <span class="capitalize">{solution.difficulty}</span>
+                <span class="capitalize">{entry.data.difficulty}</span>
                 {" · "}
                 <span>
-                  {new Date(solution.date).toLocaleDateString("en-US", {
+                  {new Date(entry.data.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
@@ -56,7 +57,7 @@ const getPlatformDisplay = (platform: string): string => {
                 </span>
               </div>
               <div class="solution-tags mono text-tertiary">
-                {solution.tags.join(" · ")}
+                {entry.data.tags.join(" · ")}
               </div>
             </article>
           ))}

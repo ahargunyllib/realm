@@ -1,0 +1,109 @@
+---
+import Footer from "@/components/footer.astro";
+import Layout from "@/components/layout.astro";
+import Section from "@/components/section.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const writeupEntries = await getCollection("writeup");
+  return writeupEntries.map((writeupEntry) => ({
+    params: { slug: writeupEntry.slug },
+    props: { entry: writeupEntry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout
+  title={`${entry.data.title} - Nugraha Billy Viandy`}
+  description={`${entry.data.competition} - ${entry.data.category} writeup`}
+  canonical={`https://ahargunyllib.dev/writeups/${entry.slug}`}
+>
+  <Section>
+    <nav class="back-nav">
+      <a href="/writeups" class="back-link">← Back to Writeups</a>
+    </nav>
+
+    <article class="writeup-post">
+      <header class="post-header">
+        <h1>{entry.data.title}</h1>
+        <div class="post-meta">
+          <div class="writeup-meta text-small text-tertiary">
+            <span>{entry.data.competition}</span>
+            {" · "}
+            <span class="capitalize">{entry.data.category.join(" · ")}</span>
+            {entry.data.difficulty && (
+              <>
+                {" · "}
+                <span class="capitalize">{entry.data.difficulty}</span>
+              </>
+            )}
+            {" · "}
+            <time class="mono">
+              {new Date(entry.data.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+            </time>
+          </div>
+          <div class="post-tags mono text-tertiary">
+            {entry.data.tags.join(" · ")}
+          </div>
+        </div>
+      </header>
+
+      <div class="post-content prose">
+        <Content />
+      </div>
+    </article>
+  </Section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .back-nav {
+    margin-bottom: var(--space-6);
+  }
+
+  .back-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .post-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .post-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .writeup-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .post-tags {
+    font-size: var(--text-small);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+</style>
