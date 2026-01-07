@@ -1,11 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import Footer from "@/components/footer.astro";
 import Layout from "@/components/layout.astro";
 import Section from "@/components/section.astro";
-import { blogPosts } from "@/data/blogs";
 
-const sortedPosts = blogPosts.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+const blogEntries = await getCollection("blog");
+const sortedPosts = blogEntries.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 ---
 
@@ -27,21 +28,21 @@ const sortedPosts = blogPosts.sort(
         </div>
       ) : (
         <div class="posts-list">
-          {sortedPosts.map((post) => (
+          {sortedPosts.map((entry) => (
             <article class="post-item">
-              <a href={`/blog/${post.slug}`}>
-                <h2>{post.title}</h2>
+              <a href={`/blogs/${entry.slug}`}>
+                <h2>{entry.data.title}</h2>
               </a>
               <p class="post-date text-tertiary text-small">
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(entry.data.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })}
               </p>
-              <p class="post-excerpt text-secondary">{post.excerpt}</p>
+              <p class="post-excerpt text-secondary">{entry.data.excerpt}</p>
               <div class="post-tags mono text-tertiary">
-                {post.tags.join(" · ")}
+                {entry.data.tags.join(" · ")}
               </div>
             </article>
           ))}
