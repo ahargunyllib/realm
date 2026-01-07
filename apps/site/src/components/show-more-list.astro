@@ -1,0 +1,97 @@
+---
+type Props = {
+  totalCount: number;
+  initialCount?: number;
+  incrementCount?: number;
+  itemSelector?: string;
+};
+
+const {
+  totalCount,
+  initialCount = 2,
+  incrementCount = 2,
+  itemSelector = ".list-item",
+} = Astro.props;
+
+const showButton = totalCount > initialCount;
+const initialRemaining = totalCount - initialCount;
+---
+
+<div class="show-more-list">
+  <slot />
+  {
+    showButton && (
+      <button
+        class="show-more-btn"
+        data-increment={incrementCount}
+        data-selector={itemSelector}
+      >
+        Show More ({initialRemaining} remaining)
+      </button>
+    )
+  }
+</div>
+
+<script>
+  const showMoreButtons =
+    document.querySelectorAll<HTMLButtonElement>(".show-more-btn");
+
+  for (const button of showMoreButtons) {
+    button.addEventListener("click", () => {
+      const increment = Number.parseInt(
+        button.getAttribute("data-increment") ?? "2",
+        10
+      );
+      const selector = button.getAttribute("data-selector") ?? ".list-item";
+
+      const container = button.closest(".show-more-list");
+      if (!container) {
+        return;
+      }
+
+      const allItems = container.querySelectorAll(selector);
+      const hiddenItems = Array.from(allItems).filter(
+        (item) => item.getAttribute("data-visible") === "false"
+      );
+
+      // Show next N items
+      for (const item of hiddenItems.slice(0, increment)) {
+        item.setAttribute("data-visible", "true");
+      }
+
+      // Update button text or hide if all visible
+      const remainingCount = hiddenItems.length - increment;
+      if (remainingCount <= 0) {
+        button.style.display = "none";
+      } else {
+        button.textContent = `Show More (${remainingCount} remaining)`;
+      }
+    });
+  }
+</script>
+
+<style>
+  .show-more-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-more-btn {
+    display: block;
+    margin: var(--space-4) auto 0;
+    padding: var(--space-2) var(--space-3);
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: var(--text-small);
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .show-more-btn:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+  }
+</style>
