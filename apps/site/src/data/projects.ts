@@ -72,6 +72,5 @@ export const projects: Project[] = [
       "Profolio is a web-based CV builder that helps users create professional, ATS-friendly resumes using structured templates and guided inputs.",
     techStack: ["TypeScript", "Next.js", "Tailwind CSS", "AI SDK"],
     githubUrl: "https://github.com/ahargunyllib/profolio",
-    liveUrl: "https://profolio.ahargunyllib.dev",
   },
 ];
