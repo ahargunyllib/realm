@@ -21,8 +21,7 @@ const sortedPosts = blogPosts.sort(
       programming.
     </p>
 
-    {
-      sortedPosts.length === 0 ? (
+    {sortedPosts.length === 0 ? (
         <div class="empty-state">
           <p class="text-secondary">No blog posts yet. Check back soon.</p>
         </div>
@@ -47,8 +46,7 @@ const sortedPosts = blogPosts.sort(
             </article>
           ))}
         </div>
-      )
-    }
+      )}
   </Section>
 
   <Footer />

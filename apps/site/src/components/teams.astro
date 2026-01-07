@@ -9,8 +9,7 @@ const { items } = Astro.props;
 ---
 
 <div class="teams-list">
-  {
-    items.map((team) => (
+  {items.map((team) => (
       <div class="team-item">
         {team.url ? (
           <a href={team.url} class="team-name">
@@ -26,8 +25,7 @@ const { items } = Astro.props;
           </span>
         )}
       </div>
-    ))
-  }
+    ))}
 </div>
 
 <style>

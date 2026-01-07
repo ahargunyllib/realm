@@ -19,8 +19,7 @@ const initialRemaining = totalCount - initialCount;
 
 <div class="show-more-list">
   <slot />
-  {
-    showButton && (
+  {showButton && (
       <button
         class="show-more-btn"
         data-increment={incrementCount}
@@ -28,8 +27,7 @@ const initialRemaining = totalCount - initialCount;
       >
         Show More ({initialRemaining} remaining)
       </button>
-    )
-  }
+    )}
 </div>
 
 <script>

@@ -52,8 +52,7 @@ const platformIcons: Record<string, string> = {
         ></path>
       </svg>
     </a>
-    {
-      socialLinks.map((link) => (
+    {socialLinks.map((link) => (
         <a
           href={link.url}
           class="social-icon"
@@ -68,8 +67,7 @@ const platformIcons: Record<string, string> = {
             <path d={platformIcons[link.platform]} />
           </svg>
         </a>
-      ))
-    }
+      ))}
   </div>
 </section>
 

@@ -31,8 +31,7 @@ const getPlatformDisplay = (platform: string): string => {
       Solutions and explanations for competitive programming problems.
     </p>
 
-    {
-      sortedSolutions.length === 0 ? (
+    {sortedSolutions.length === 0 ? (
         <div class="empty-state">
           <p class="text-secondary">No solutions yet. Check back soon.</p>
         </div>
@@ -62,11 +61,10 @@ const getPlatformDisplay = (platform: string): string => {
             </article>
           ))}
         </div>
-      )
-    }
+      )}
   </Section>
 
-  <Footer/>
+  <Footer />
 </Layout>
 
 <style>

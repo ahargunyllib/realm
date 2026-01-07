@@ -38,8 +38,7 @@ const categoryOrder: UsesCategory[] = ["hardware", "os", "software"];
       and competitive programming.
     </p>
 
-    {
-      categoryOrder
+    {categoryOrder
         .filter((category) => groupedUses[category])
         .map((category) => (
           <div class="uses-category">
@@ -61,11 +60,10 @@ const categoryOrder: UsesCategory[] = ["hardware", "os", "software"];
               ))}
             </div>
           </div>
-        ))
-    }
+        ))}
   </Section>
 
-  <Footer/>
+  <Footer />
 </Layout>
 
 <style>

@@ -26,8 +26,7 @@ const categoryLabels: Record<SocialCategory, string> = {
 ---
 
 <div class="social-grid">
-  {
-    Object.entries(groupedLinks).map(([category, links]) => (
+  {Object.entries(groupedLinks).map(([category, links]) => (
       <div class="social-category">
         <h3 class="category-title text-small text-tertiary">
           {categoryLabels[category as SocialCategory]}
@@ -40,8 +39,7 @@ const categoryLabels: Record<SocialCategory, string> = {
           ))}
         </div>
       </div>
-    ))
-  }
+    ))}
 </div>
 
 <style>

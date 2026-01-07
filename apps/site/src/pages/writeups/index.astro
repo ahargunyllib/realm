@@ -21,8 +21,7 @@ const sortedWriteups = writeups.sort(
       problems.
     </p>
 
-    {
-      sortedWriteups.length > 0 ? (
+    {sortedWriteups.length > 0 ? (
         <div class="writeups-list">
           {sortedWriteups.map((writeup) => (
             <article class="writeup-item">
@@ -58,11 +57,10 @@ const sortedWriteups = writeups.sort(
         <div class="empty-state">
           <p class="text-secondary">No writeups yet. Coming soon.</p>
         </div>
-      )
-    }
+      )}
   </Section>
 
-  <Footer/>
+  <Footer />
 </Layout>
 
 <style>

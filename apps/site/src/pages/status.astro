@@ -37,20 +37,18 @@ import Section from "@/components/section.astro";
         <div>
           <p class="status-label">Last Updated</p>
           <p class="status-value text-secondary">
-            {
-              new Date().toLocaleDateString("en-US", {
+            {new Date().toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
-              })
-            }
+              })}
           </p>
         </div>
       </div>
     </div>
   </Section>
 
-  <Footer/>
+  <Footer />
 </Layout>
 
 <style>

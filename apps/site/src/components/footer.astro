@@ -31,13 +31,11 @@ const currentYear = new Date().getFullYear();
       <a href={`mailto:${profile.email}`} class="connect-link text-small">
         Email
       </a>
-      {
-        socialLinks.map((link) => (
+      {socialLinks.map((link) => (
           <a href={link.url} class="connect-link text-small">
             {link.platform}
           </a>
-        ))
-      }
+        ))}
     </div>
   </div>
 
