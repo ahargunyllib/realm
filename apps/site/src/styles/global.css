@@ -70,6 +70,9 @@ h6 {
 
   /* Font Sizes */
   --text-display: 48px;
+  --text-2xl: 36px;
+  --text-xl: 28px;
+  --text-lg: 24px;
   --text-h1: 32px;
   --text-h2: 20px;
   --text-body: 16px;
@@ -207,4 +210,89 @@ a:focus-visible {
 ::selection {
   background-color: var(--color-text-primary);
   color: var(--color-bg);
+}
+
+/* Prose - Markdown Content Styles */
+.prose {
+  line-height: var(--leading-relaxed);
+  max-width: 70ch;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-tight);
+}
+
+.prose h1 {
+  font-size: var(--text-2xl);
+}
+
+.prose h2 {
+  font-size: var(--text-xl);
+}
+
+.prose h3 {
+  font-size: var(--text-lg);
+}
+
+.prose p {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+  color: var(--color-text-secondary);
+}
+
+.prose li {
+  margin-bottom: var(--space-2);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-code-bg, rgba(127, 127, 127, 0.1));
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+.prose pre {
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-code-bg, rgba(127, 127, 127, 0.1));
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose blockquote {
+  margin: var(--space-6) 0;
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.prose a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  transition: text-decoration-color 0.2s;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-text-primary);
 }
