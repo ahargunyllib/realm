@@ -66,4 +66,12 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/ahargunyllib/sea-catering",
   },
+  {
+    name: "Profolio",
+    description:
+      "Profolio is a web-based CV builder that helps users create professional, ATS-friendly resumes using structured templates and guided inputs.",
+    techStack: ["TypeScript", "Next.js", "Tailwind CSS", "AI SDK"],
+    githubUrl: "https://github.com/ahargunyllib/profolio",
+    liveUrl: "https://profolio.ahargunyllib.dev",
+  },
 ];
