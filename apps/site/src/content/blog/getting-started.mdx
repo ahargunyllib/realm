@@ -1,0 +1,73 @@
+---
+title: "Getting Started with MDX"
+date: "2026-01-07"
+excerpt: "Learn how to write blog posts using MDX, combining the power of Markdown with React components."
+tags: ["mdx", "astro", "blogging", "web development"]
+---
+
+# Getting Started with MDX
+
+Welcome to your first MDX blog post! MDX allows you to write content using Markdown while also embedding JSX components directly in your content.
+
+## What is MDX?
+
+MDX is a format that lets you seamlessly write JSX in your Markdown documents. This means you can:
+
+- Write standard Markdown content
+- Import and use React/Astro components
+- Create interactive documentation
+- Build dynamic blog posts
+
+## Writing Content
+
+You can use all standard Markdown features:
+
+### Code Blocks
+
+Here's a TypeScript example:
+
+```typescript
+interface BlogPost {
+  title: string;
+  date: string;
+  excerpt: string;
+  tags: string[];
+}
+
+const post: BlogPost = {
+  title: "Getting Started with MDX",
+  date: "2026-01-07",
+  excerpt: "Learn how to write blog posts using MDX",
+  tags: ["mdx", "astro", "blogging"],
+};
+```
+
+### Lists
+
+Ordered lists:
+
+1. First item
+2. Second item
+3. Third item
+
+Unordered lists:
+
+- Bullet point one
+- Bullet point two
+- Bullet point three
+
+### Emphasis and Formatting
+
+You can use **bold text**, _italic text_, and `inline code` just like in regular Markdown.
+
+## Links and Images
+
+Create links like this: [Visit Astro](https://astro.build)
+
+> This is a blockquote. Use it for emphasis or to highlight important information.
+
+## Conclusion
+
+MDX combines the simplicity of Markdown with the power of components, making it perfect for technical blogs, documentation, and interactive content.
+
+Happy writing!
