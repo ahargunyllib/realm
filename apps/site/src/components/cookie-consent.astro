@@ -1,0 +1,174 @@
+<div id="cookie-consent-notice" class="cookie-notice" style="display: none;">
+  <div class="notice-container">
+    <div class="notice-content">
+      <h3 class="notice-title">Analytics</h3>
+      <p class="notice-text">
+        This site uses Umami Analytics to understand visitor interactions. We
+        collect anonymized data—page views, referrers—nothing personal. Your
+        choice helps us improve.
+      </p>
+    </div>
+    <div class="notice-actions">
+      <button
+        type="button"
+        id="cookie-accept"
+        class="notice-btn notice-btn-accept"
+      >
+        Accept
+      </button>
+      <button
+        type="button"
+        id="cookie-decline"
+        class="notice-btn notice-btn-decline"
+      >
+        Decline
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-notice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-3);
+    z-index: 9999;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .notice-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .notice-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .notice-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-h2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: var(--leading-tight);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .notice-text {
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  .notice-actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-shrink: 0;
+    align-items: flex-start;
+    padding-top: 2px; /* Optical alignment with title */
+  }
+
+  .notice-btn {
+    font-family: var(--font-sans);
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-border);
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .notice-btn:hover {
+    opacity: 0.6;
+  }
+
+  .notice-btn:focus-visible {
+    outline: 2px solid var(--color-text-primary);
+    outline-offset: 4px;
+  }
+
+  .notice-btn-accept {
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .cookie-notice {
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .notice-container {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .notice-actions {
+      width: 100%;
+      justify-content: flex-start;
+      padding-top: 0;
+    }
+  }
+</style>
+
+<script is:inline>
+  const CONSENT_KEY = "analytics-consent";
+
+  const initCookieConsent = () => {
+    const notice = document.getElementById("cookie-consent-notice");
+    const acceptBtn = document.getElementById("cookie-accept");
+    const declineBtn = document.getElementById("cookie-decline");
+
+    // Check if user has already responded
+    const existingConsent = localStorage.getItem(CONSENT_KEY);
+
+    if (!existingConsent) {
+      // Show notice if no consent recorded
+      notice.style.display = "block";
+    }
+
+    // Handle Accept
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "accepted");
+      notice.style.display = "none";
+      // Reload to apply tracking config
+      window.location.reload();
+    });
+
+    // Handle Decline
+    declineBtn.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "declined");
+      notice.style.display = "none";
+      // Reload to apply tracking config
+      window.location.reload();
+    });
+  };
+
+  // Initialize on page load
+  initCookieConsent();
+</script>

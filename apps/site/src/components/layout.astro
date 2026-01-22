@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import Umami from "./umami.astro";
+import CookieConsent from "./cookie-consent.astro";
 
 type Props = {
   title: string;
@@ -102,5 +103,6 @@ const jsonLd = {
     <div class="container">
       <slot />
     </div>
+    <CookieConsent />
   </body>
 </html>

@@ -9,12 +9,12 @@ type TrackConfig = {
   doNotTrack?: boolean;
   beforeSendHandler?: string | null;
   withPartytown?: boolean;
-}
+};
 
 export type Props = {
   websiteId: string;
   scriptSrc?: string;
-} & TrackConfig;
+};
 
 const { websiteId, scriptSrc = "https://cloud.umami.is/script.js" } =
   Astro.props;
@@ -45,6 +45,18 @@ const defaultConfig: TrackConfig = {
   const setupUmamiIntegration = () => {
     const configEl = document.currentScript;
     const config = JSON.parse(configEl.getAttribute("data-umami-config"));
+
+    // Read user consent from localStorage
+    const CONSENT_KEY = "analytics-consent";
+    const userConsent = localStorage.getItem(CONSENT_KEY);
+
+    // Apply consent to doNotTrack config
+    if (userConsent === "declined") {
+      config.doNotTrack = true; // Disable tracking if declined
+    } else if (userConsent === "accepted") {
+      config.doNotTrack = false; // Enable tracking if accepted
+    }
+    // If no consent yet (userConsent is null), use default config (doNotTrack: false)
 
     if (config.mode === "development") {
       localStorage.setItem("umami.disabled", "1");
