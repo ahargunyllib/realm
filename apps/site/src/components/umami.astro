@@ -19,8 +19,6 @@ export type Props = {
 const { websiteId, scriptSrc = "https://cloud.umami.is/script.js" } =
   Astro.props;
 
-const mode = import.meta.env.MODE;
-
 const defaultConfig: TrackConfig = {
   autoTrack: true,
   hostUrl: "https://cloud.umami.is",
@@ -33,84 +31,47 @@ const defaultConfig: TrackConfig = {
 };
 ---
 
-<script
-  is:inline
-  data-umami-config={JSON.stringify({
-    ...defaultConfig,
-    websiteId,
-    scriptSrc,
-    mode,
-  })}
->
-  const setupUmamiIntegration = () => {
-    const configEl = document.currentScript;
-    const config = JSON.parse(configEl.getAttribute("data-umami-config"));
-
-    // Read user consent from localStorage
-    const CONSENT_KEY = "analytics-consent";
-    const userConsent = localStorage.getItem(CONSENT_KEY);
-
-    // Apply consent to doNotTrack config
-    if (userConsent === "declined") {
-      config.doNotTrack = true; // Disable tracking if declined
-    } else if (userConsent === "accepted") {
-      config.doNotTrack = false; // Enable tracking if accepted
-    }
-    // If no consent yet (userConsent is null), use default config (doNotTrack: false)
-
-    if (config.mode === "development") {
-      localStorage.setItem("umami.disabled", "1");
-    }
-
-    const script = document.createElement("script");
-    const viewTransitionsEnabled = document.querySelector(
-      "meta[name='astro-view-transitions-enabled']"
-    )?.content;
-
-    script.setAttribute("src", config.scriptSrc);
-    script.setAttribute("defer", "true");
-    script.setAttribute("data-website-id", config.websiteId);
-
-    script.setAttribute("data-auto-track", String(config.autoTrack));
-
-    if (config.beforeSendHandler) {
-      script.setAttribute("data-before-send", config.beforeSendHandler);
-    }
-
-    if (config.domains.length > 0) {
-      script.setAttribute("data-domains", config.domains.join(","));
-    }
-
-    if (config.doNotTrack) {
-      script.setAttribute("data-do-not-track", String(config.doNotTrack));
-    }
-
-    if (config.excludeHash) {
-      script.setAttribute("data-exclude-hash", String(config.excludeHash));
-    }
-
-    if (config.excludeSearch) {
-      script.setAttribute("data-exclude-search", String(config.excludeSearch));
-    }
-
-    if (config.hostUrl !== "https://cloud.umami.is") {
-      script.setAttribute("data-host-url", config.hostUrl);
-    }
-
-    if (config.tag) {
-      script.setAttribute("data-tag", config.tag);
-    }
-
-    if (viewTransitionsEnabled) {
-      script.setAttribute("data-astro-rerun", "true");
-    }
-  };
-
-  setupUmamiIntegration();
+<script>
+  const mode = import.meta.env.MODE;
+  if (mode === "development") {
+    localStorage.setItem("umami.disabled", "1");
+  }
 </script>
 
-<!-- Outbound Link Tracking -->
-<script is:inline>
+<script
+  defer
+  src={scriptSrc}
+  data-website-id={websiteId}
+  is:inline
+  data-auto-track={defaultConfig.autoTrack ? "true" : "false"}
+  data-host-url={defaultConfig.hostUrl}
+  data-domains={defaultConfig.domains?.join(",")}
+  data-tag={defaultConfig.tag}
+  data-exclude-search={defaultConfig.excludeSearch ? "true" : "false"}
+  data-exclude-hash={defaultConfig.excludeHash ? "true" : "false"}
+  data-do-not-track={defaultConfig.doNotTrack ? "true" : "false"}
+  data-before-send={defaultConfig.beforeSendHandler}
+  data-astro-rerun="false"
+>
+  const script = document.currentScript;
+  const CONSENT_KEY = "analytics-consent";
+  const userConsent = localStorage.getItem(CONSENT_KEY);
+
+  if (userConsent === "declined") {
+    script.setAttribute("data-do-not-track", "true");
+  } else if (userConsent === "accepted") {
+    script.setAttribute("data-do-not-track", "false");
+  }
+
+  const viewTransitionsEnabled = document.querySelector<HTMLMetaElement>(
+    "meta[name='astro-view-transitions-enabled']"
+  )?.content;
+  if (viewTransitionsEnabled === "true") {
+    script.setAttribute("data-astro-rerun", "true");
+  }
+</script>
+
+<script>
   const setupOutboundLinkTracking = () => {
     const eventName = "outbound-link-click";
     const anchors = document.querySelectorAll("a");
@@ -129,17 +90,9 @@ const defaultConfig: TrackConfig = {
       }
 
       anchor.setAttribute("data-umami-event", eventName);
-      anchor.setAttribute("data-umami-event-url", anchor.href);
+      anchor.setAttribute("data-umami-event-url", href);
     }
   };
 
-  // Run on initial page load
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupOutboundLinkTracking);
-  } else {
-    setupOutboundLinkTracking();
-  }
-
-  // Re-run on Astro view transitions (if enabled)
-  document.addEventListener("astro:page-load", setupOutboundLinkTracking);
+  setupOutboundLinkTracking();
 </script>

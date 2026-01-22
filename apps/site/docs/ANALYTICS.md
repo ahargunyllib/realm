@@ -150,18 +150,47 @@ All `data-umami-event-*` attributes will be sent as event properties.
 
 **Location:** `apps/site/src/components/umami.astro`
 
-**Key Responsibilities:**
-1. Load Umami tracking script with proper configuration
-2. Read user consent from localStorage
-3. Apply `doNotTrack` setting based on consent
-4. Disable analytics in development mode
-5. Support Astro view transitions
-6. Set up outbound link tracking
+**Props:**
+```typescript
+type Props = {
+  websiteId: string;      // Umami website ID (required)
+  scriptSrc?: string;     // Script URL (default: "https://cloud.umami.is/script.js")
+}
+```
+
+**Usage:**
+```astro
+<Umami websiteId="48062ad1-90e3-48a6-9691-571c063ea4a9" />
+```
+
+**Architecture:**
+The component uses **three separate script tags** for clean separation of concerns:
+
+1. **`<script>` - Development mode check** (runs first, non-deferred)
+   - Checks `import.meta.env.MODE`
+   - Sets `umami.disabled` in localStorage if development
+
+2. **`<script defer>` - Umami loader** (deferred, with inline consent)
+   - Loads Umami script from cloud or custom source
+   - Contains inline script to check consent before init
+   - Uses `document.currentScript` to modify own attributes
+
+3. **`<script>` - Outbound link tracker** (runs after DOM ready)
+   - Scans all `<a>` elements
+   - Adds tracking to external links
+
+**Benefits of this architecture:**
+- ✅ All consent/env checks run **client-side** (no SSR issues)
+- ✅ Clear separation: dev check → load → track
+- ✅ Consent can override default config dynamically
+- ✅ Fully SSR-compatible (frontmatter only has static config)
 
 ### Configuration
 
+The configuration is set in the Astro frontmatter and applied directly to the script tag:
+
 ```javascript
-const defaultConfig = {
+const defaultConfig: TrackConfig = {
   autoTrack: true,
   hostUrl: "https://cloud.umami.is",
   domains: ["ahargunyllib.dev", "www.ahargunyllib.dev", "localhost"],
@@ -173,65 +202,124 @@ const defaultConfig = {
 };
 ```
 
-### Consent Integration
+### Development Mode Check
+
+Analytics are disabled automatically in development (client-side):
 
 ```javascript
-// Read consent from localStorage
-const CONSENT_KEY = "analytics-consent";
-const userConsent = localStorage.getItem(CONSENT_KEY);
-
-// Apply consent to tracking config
-if (userConsent === "declined") {
-  config.doNotTrack = true;  // Disable tracking
-} else if (userConsent === "accepted") {
-  config.doNotTrack = false; // Enable tracking
-}
-// If no consent yet, use default (tracking enabled)
+<script>
+  const mode = import.meta.env.MODE;
+  if (mode === "development") {
+    localStorage.setItem("umami.disabled", "1");
+  }
+</script>
 ```
+
+This runs before the Umami script loads, ensuring dev traffic doesn't pollute analytics.
+
+### Consent Integration
+
+Consent is checked **inside the Umami script tag** using `document.currentScript`:
+
+```javascript
+<script
+  defer
+  src={scriptSrc}
+  data-website-id={websiteId}
+  is:inline
+  data-do-not-track={defaultConfig.doNotTrack ? "true" : "false"}
+  ...
+>
+  const script = document.currentScript;
+  const CONSENT_KEY = "analytics-consent";
+  const userConsent = localStorage.getItem(CONSENT_KEY);
+
+  if (userConsent === "declined") {
+    script.setAttribute("data-do-not-track", "true");
+  } else if (userConsent === "accepted") {
+    script.setAttribute("data-do-not-track", "false");
+  }
+</script>
+```
+
+**How it works:**
+1. Script tag is created with default `data-do-not-track` from config (false)
+2. Inline script reads consent from localStorage
+3. Uses `document.currentScript` to reference itself
+4. Modifies `data-do-not-track` attribute before Umami initializes
+5. If no consent yet, default value (false) is used
+
+### Script Loading
+
+The Umami script is loaded declaratively with all configuration as data attributes:
+
+```astro
+<script
+  defer
+  src={scriptSrc}
+  data-website-id={websiteId}
+  is:inline
+  data-auto-track={defaultConfig.autoTrack ? "true" : "false"}
+  data-host-url={defaultConfig.hostUrl}
+  data-domains={defaultConfig.domains?.join(",")}
+  data-tag={defaultConfig.tag}
+  data-exclude-search={defaultConfig.excludeSearch ? "true" : "false"}
+  data-exclude-hash={defaultConfig.excludeHash ? "true" : "false"}
+  data-do-not-track={defaultConfig.doNotTrack ? "true" : "false"}
+  data-before-send={defaultConfig.beforeSendHandler}
+  data-astro-rerun="false"
+>
+  <!-- Inline consent check (see Consent Integration above) -->
+</script>
+```
+
+**Key attributes:**
+- `defer` - Script loads after HTML parsing, doesn't block rendering
+- `is:inline` - Prevents Astro from processing/bundling the script
+- `data-website-id` - Your unique Umami website ID
+- `data-auto-track` - Enable/disable automatic page view tracking
+- `data-do-not-track` - Respects user consent (overridden by inline script)
+- `data-astro-rerun="false"` - Currently disabled for view transitions
+- Contains inline script to check consent before initialization
 
 ### Outbound Link Tracking
 
-The outbound link tracking script runs:
-- On initial page load (`DOMContentLoaded`)
-- After every Astro view transition (`astro:page-load`)
-
-This ensures all dynamically loaded links are tracked properly.
+The outbound link tracking script runs on page load and scans all anchor tags:
 
 ```javascript
-const setupOutboundLinkTracking = () => {
-  const eventName = "outbound-link-click";
-  const anchors = document.querySelectorAll("a");
-  const currentHost = window.location.host;
+<script>
+  const setupOutboundLinkTracking = () => {
+    const eventName = "outbound-link-click";
+    const anchors = document.querySelectorAll("a");
+    const currentHost = window.location.host;
 
-  for (let i = 0; i < anchors.length; i++) {
-    const anchor = anchors.item(i);
-    const { host, href } = anchor;
+    for (let i = 0; i < anchors.length; i++) {
+      const anchor = anchors.item(i);
+      const { host, href } = anchor;
 
-    // Skip internal links
-    if (host === currentHost) {
-      continue;
+      if (host === currentHost) {
+        continue; // Skip internal links
+      }
+
+      if (anchor.hasAttribute("data-umami-event")) {
+        continue; // Skip if already has tracking
+      }
+
+      anchor.setAttribute("data-umami-event", eventName);
+      anchor.setAttribute("data-umami-event-url", href);
     }
+  };
 
-    // Skip if already has tracking
-    if (anchor.hasAttribute("data-umami-event")) {
-      continue;
-    }
-
-    anchor.setAttribute("data-umami-event", eventName);
-    anchor.setAttribute("data-umami-event-url", href);
-  }
-};
-
-// Run on initial page load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", setupOutboundLinkTracking);
-} else {
   setupOutboundLinkTracking();
-}
-
-// Re-run on Astro view transitions (if enabled)
-document.addEventListener("astro:page-load", setupOutboundLinkTracking);
+</script>
 ```
+
+**How it works:**
+1. Selects all `<a>` elements on the page
+2. Checks if each link's host differs from current host (external link)
+3. Skips links that already have `data-umami-event` attribute
+4. Adds tracking attributes to external links
+5. Runs immediately when script loads (not deferred)
 
 ## Privacy Considerations
 
