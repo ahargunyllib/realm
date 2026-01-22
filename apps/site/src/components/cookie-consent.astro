@@ -136,13 +136,17 @@
   }
 </style>
 
-<script is:inline>
+<script>
   const CONSENT_KEY = "analytics-consent";
 
   const initCookieConsent = () => {
     const notice = document.getElementById("cookie-consent-notice");
     const acceptBtn = document.getElementById("cookie-accept");
     const declineBtn = document.getElementById("cookie-decline");
+
+    if (!(notice && acceptBtn && declineBtn)) {
+      return;
+    }
 
     // Check if user has already responded
     const existingConsent = localStorage.getItem(CONSENT_KEY);
