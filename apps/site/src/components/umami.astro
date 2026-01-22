@@ -69,9 +69,9 @@ const defaultConfig: TrackConfig = {
 
     script.setAttribute("src", config.scriptSrc);
     script.setAttribute("defer", "true");
-    script.setAttribute("data-website-id", config.id);
+    script.setAttribute("data-website-id", config.websiteId);
 
-    script.setAttribute("data-auto-track", String(config.autotrack));
+    script.setAttribute("data-auto-track", String(config.autoTrack));
 
     if (config.beforeSendHandler) {
       script.setAttribute("data-before-send", config.beforeSendHandler);
@@ -101,16 +101,9 @@ const defaultConfig: TrackConfig = {
       script.setAttribute("data-tag", config.tag);
     }
 
-    if (config.withPartytown) {
-      script.setAttribute("type", "text/partytown");
-    }
-
     if (viewTransitionsEnabled) {
       script.setAttribute("data-astro-rerun", "true");
     }
-
-    const head = document.querySelector("head");
-    head.appendChild(script);
   };
 
   setupUmamiIntegration();
