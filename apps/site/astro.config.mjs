@@ -8,4 +8,7 @@ export default defineConfig({
   site: "https://ahargunyllib.dev",
   adapter: cloudflare(),
   integrations: [mdx(), sitemap()],
+  redirects: {
+    "/analytics": "https://cloud.umami.is/share/eRIQq2WDxJVgvbcV",
+  },
 });
