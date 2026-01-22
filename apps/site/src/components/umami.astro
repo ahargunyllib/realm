@@ -1,0 +1,105 @@
+---
+type TrackConfig = {
+  autoTrack?: boolean;
+  hostUrl?: string;
+  domains?: string[];
+  tag?: string;
+  excludeSearch?: boolean;
+  excludeHash?: boolean;
+  doNotTrack?: boolean;
+  beforeSendHandler?: string | null;
+  withPartytown?: boolean;
+}
+
+export type Props = {
+  websiteId: string;
+  scriptSrc?: string;
+} & TrackConfig;
+
+const { websiteId, scriptSrc = "https://cloud.umami.is/script.js" } =
+  Astro.props;
+
+const mode = import.meta.env.MODE;
+
+const defaultConfig: TrackConfig = {
+  autoTrack: true,
+  hostUrl: "https://cloud.umami.is",
+  domains: ["ahargunyllib.dev", "www.ahargunyllib.dev", "localhost"],
+  tag: "site",
+  excludeSearch: false,
+  excludeHash: false,
+  doNotTrack: false,
+  beforeSendHandler: null,
+};
+---
+
+<script
+  is:inline
+  data-umami-config={JSON.stringify({
+    ...defaultConfig,
+    websiteId,
+    scriptSrc,
+    mode,
+  })}
+>
+  const setupUmamiIntegration = () => {
+    const configEl = document.currentScript;
+    const config = JSON.parse(configEl.getAttribute("data-umami-config"));
+
+    if (config.mode === "development") {
+      localStorage.setItem("umami.disabled", "1");
+    }
+
+    const script = document.createElement("script");
+    const viewTransitionsEnabled = document.querySelector(
+      "meta[name='astro-view-transitions-enabled']"
+    )?.content;
+
+    script.setAttribute("src", config.scriptSrc);
+    script.setAttribute("defer", "true");
+    script.setAttribute("data-website-id", config.id);
+
+    script.setAttribute("data-auto-track", String(config.autotrack));
+
+    if (config.beforeSendHandler) {
+      script.setAttribute("data-before-send", config.beforeSendHandler);
+    }
+
+    if (config.domains.length > 0) {
+      script.setAttribute("data-domains", config.domains.join(","));
+    }
+
+    if (config.doNotTrack) {
+      script.setAttribute("data-do-not-track", String(config.doNotTrack));
+    }
+
+    if (config.excludeHash) {
+      script.setAttribute("data-exclude-hash", String(config.excludeHash));
+    }
+
+    if (config.excludeSearch) {
+      script.setAttribute("data-exclude-search", String(config.excludeSearch));
+    }
+
+    if (config.hostUrl !== "https://cloud.umami.is") {
+      script.setAttribute("data-host-url", config.hostUrl);
+    }
+
+    if (config.tag) {
+      script.setAttribute("data-tag", config.tag);
+    }
+
+    if (config.withPartytown) {
+      script.setAttribute("type", "text/partytown");
+    }
+
+    if (viewTransitionsEnabled) {
+      script.setAttribute("data-astro-rerun", "true");
+    }
+
+    const head = document.querySelector("head");
+    head.appendChild(script);
+  };
+
+  setupUmamiIntegration();
+</script>
