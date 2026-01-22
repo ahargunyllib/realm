@@ -21,6 +21,7 @@ const initialRemaining = totalCount - initialCount;
   <slot />
   {showButton && (
       <button
+        type="button"
         class="show-more-btn"
         data-increment={incrementCount}
         data-selector={itemSelector}

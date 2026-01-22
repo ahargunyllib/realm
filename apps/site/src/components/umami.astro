@@ -86,7 +86,7 @@ const defaultConfig: TrackConfig = {
       }
 
       if (anchor.hasAttribute("data-umami-event")) {
-        continue; // Skip if already has tracking
+        continue; // Skip if already has tracking (e.g., content-click)
       }
 
       anchor.setAttribute("data-umami-event", eventName);

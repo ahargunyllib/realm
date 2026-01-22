@@ -137,6 +137,8 @@
 </style>
 
 <script>
+  import { trackCookieConsent } from "@/utils/analytics";
+
   const CONSENT_KEY = "analytics-consent";
 
   const initCookieConsent = () => {
@@ -159,6 +161,10 @@
     // Handle Accept
     acceptBtn.addEventListener("click", () => {
       localStorage.setItem(CONSENT_KEY, "accepted");
+
+      // Track consent action before reload
+      trackCookieConsent("accepted");
+
       notice.style.display = "none";
       // Reload to apply tracking config
       window.location.reload();
@@ -167,6 +173,10 @@
     // Handle Decline
     declineBtn.addEventListener("click", () => {
       localStorage.setItem(CONSENT_KEY, "declined");
+
+      // Track consent action before reload
+      trackCookieConsent("declined");
+
       notice.style.display = "none";
       // Reload to apply tracking config
       window.location.reload();

@@ -40,7 +40,14 @@ const getPlatformDisplay = (platform: string): string => {
         <div class="solutions-list">
           {sortedSolutions.map((entry) => (
             <article class="solution-item">
-              <a href={`/solutions/${entry.slug}`}>
+              <a
+                href={`/solutions/${entry.slug}`}
+                data-umami-event="content-click"
+                data-umami-event-type="solution"
+                data-umami-event-title={entry.data.title}
+                data-umami-event-tags={entry.data.tags.join(" · ")}
+                data-umami-event-location="list"
+              >
                 <h2>{entry.data.title}</h2>
               </a>
               <div class="solution-meta text-small text-tertiary">
