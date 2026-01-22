@@ -321,6 +321,11 @@ All text meets WCAG AA standards:
 - `apps/site/src/components/footer.astro` - Navigation patterns
 - `apps/site/src/components/section.astro` - Spacing rhythm
 
+**Documentation:**
+- `apps/site/docs/CONTENT_GUIDE.md` - Content writing guidelines
+- `apps/site/docs/DESIGN_SYSTEM.md` - This document
+- `apps/site/docs/ANALYTICS.md` - Analytics implementation and tracking
+
 ---
 
 **Last Updated:** January 2026

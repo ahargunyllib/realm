@@ -115,3 +115,38 @@ const defaultConfig: TrackConfig = {
 
   setupUmamiIntegration();
 </script>
+
+<!-- Outbound Link Tracking -->
+<script is:inline>
+  const setupOutboundLinkTracking = () => {
+    const eventName = "outbound-link-click";
+    const anchors = document.querySelectorAll("a");
+    const currentHost = window.location.host;
+
+    for (let i = 0; i < anchors.length; i++) {
+      const anchor = anchors.item(i);
+      const { host, href } = anchor;
+
+      if (host === currentHost) {
+        continue; // Skip internal links
+      }
+
+      if (anchor.hasAttribute("data-umami-event")) {
+        continue; // Skip if already has tracking
+      }
+
+      anchor.setAttribute("data-umami-event", eventName);
+      anchor.setAttribute("data-umami-event-url", anchor.href);
+    }
+  };
+
+  // Run on initial page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupOutboundLinkTracking);
+  } else {
+    setupOutboundLinkTracking();
+  }
+
+  // Re-run on Astro view transitions (if enabled)
+  document.addEventListener("astro:page-load", setupOutboundLinkTracking);
+</script>
