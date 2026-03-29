@@ -9,7 +9,7 @@ on:
       - 'apps/www/**'
       - 'packages/**'
       - 'package.json'
-      - 'bun.lock'
+      - 'pnpm-lock.yaml'
       - '!**/*.md'
       - '!**/README*'
 
