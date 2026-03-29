@@ -1,7 +1,12 @@
-import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 
 const blog = defineCollection({
-  type: "content",
+  loader: glob({
+    base: "./src/content/blog",
+    pattern: "**/*.{md,mdx}",
+  }),
   schema: z.object({
     title: z.string(),
     date: z.string(),
@@ -11,7 +16,10 @@ const blog = defineCollection({
 });
 
 const solution = defineCollection({
-  type: "content",
+  loader: glob({
+    base: "./src/content/solution",
+    pattern: "**/*.{md,mdx}",
+  }),
   schema: z.object({
     title: z.string(),
     platform: z.enum(["codeforces", "leetcode", "atcoder", "tlx", "other"]),
@@ -23,7 +31,10 @@ const solution = defineCollection({
 });
 
 const writeup = defineCollection({
-  type: "content",
+  loader: glob({
+    base: "./src/content/writeup",
+    pattern: "**/*.{md,mdx}",
+  }),
   schema: z.object({
     title: z.string(),
     competition: z.string(),

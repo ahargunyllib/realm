@@ -10,15 +10,15 @@
     "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.11",
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.14.4",
+    "@astrojs/cloudflare": "^13.1.4",
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.1.1",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@astrojs/ts-plugin": "^1.10.4",
+    "@astrojs/ts-plugin": "^1.10.7",
     "@realm/tsconfig": "workspace:*",
-    "wrangler": "^4.49.0"
+    "wrangler": "^4.78.0"
   }
 }

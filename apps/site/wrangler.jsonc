@@ -1,7 +1,7 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "realm-site",
-	"main": "dist/_worker.js/index.js",
+  "main": "@astrojs/cloudflare/entrypoints/server",
 	"compatibility_date": "2025-11-09",
 	"compatibility_flags": [
 		"nodejs_compat",
