@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "realm-server",
+	"name": "realm-api",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-06-15",
 	"compatibility_flags": ["nodejs_compat"],
@@ -9,6 +9,40 @@
 	"vars": {
 		"NODE_ENV": "production"
 	},
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "realm-db",
+      "database_id": "FILL_FROM_ALCHEMY"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "FILL_FROM_ALCHEMY"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "STORAGE",
+      "bucket_name": "realm-storage"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "queue": "realm-queue",
+        "binding": "QUEUE"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "realm-queue",
+        "max_batch_size": 10,
+        "max_wait_time_ms": 1000
+      }
+    ]
+  },
   "observability": {
     "logs": {
       "enabled": true,

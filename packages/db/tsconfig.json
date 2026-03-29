@@ -1,0 +1,11 @@
+{
+  "extends": "@realm/tsconfig/base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "declarationMap": true,
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["src"]
+}
