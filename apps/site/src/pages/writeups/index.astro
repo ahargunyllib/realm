@@ -27,7 +27,7 @@ const sortedWriteups = writeupEntries.sort(
           {sortedWriteups.map((entry) => (
             <article class="writeup-item">
               <a
-                href={`/writeups/${entry.slug}`}
+                href={`/writeups/${entry.id}`}
                 data-umami-event="content-click"
                 data-umami-event-type="writeup"
                 data-umami-event-title={entry.data.title}
@@ -68,7 +68,7 @@ const sortedWriteups = writeupEntries.sort(
       )}
   </Section>
 
-  <Footer />
+  <Footer/>
 </Layout>
 
 <style>

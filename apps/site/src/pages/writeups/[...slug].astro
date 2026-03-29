@@ -2,24 +2,24 @@
 import Footer from "@/components/footer.astro";
 import Layout from "@/components/layout.astro";
 import Section from "@/components/section.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
   const writeupEntries = await getCollection("writeup");
   return writeupEntries.map((writeupEntry) => ({
-    params: { slug: writeupEntry.slug },
+    params: { slug: writeupEntry.id },
     props: { entry: writeupEntry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <Layout
   title={`${entry.data.title} - Nugraha Billy Viandy`}
   description={`${entry.data.competition} - ${entry.data.category} writeup`}
-  canonical={`https://ahargunyllib.dev/writeups/${entry.slug}`}
+  canonical={`https://ahargunyllib.dev/writeups/${entry.id}`}
 >
   <Section>
     <nav class="back-nav">
@@ -56,12 +56,12 @@ const { Content } = await entry.render();
       </header>
 
       <div class="prose">
-        <Content />
+        <Content/>
       </div>
     </article>
   </Section>
 
-  <Footer />
+  <Footer/>
 </Layout>
 
 <style>

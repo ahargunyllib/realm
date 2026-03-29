@@ -2,18 +2,18 @@
 import Footer from "@/components/footer.astro";
 import Layout from "@/components/layout.astro";
 import Section from "@/components/section.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
   const solutionEntries = await getCollection("solution");
   return solutionEntries.map((solutionEntry) => ({
-    params: { slug: solutionEntry.slug },
+    params: { slug: solutionEntry.id },
     props: { entry: solutionEntry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const getPlatformDisplay = (platform: string): string => {
   const displays: Record<string, string> = {
@@ -30,7 +30,7 @@ const getPlatformDisplay = (platform: string): string => {
 <Layout
   title={`${entry.data.title} - Nugraha Billy Viandy`}
   description={`Solution for ${entry.data.title} from ${getPlatformDisplay(entry.data.platform)}`}
-  canonical={`https://ahargunyllib.dev/solutions/${entry.slug}`}
+  canonical={`https://ahargunyllib.dev/solutions/${entry.id}`}
 >
   <Section>
     <nav class="back-nav">
@@ -69,12 +69,12 @@ const getPlatformDisplay = (platform: string): string => {
       </header>
 
       <div class="prose">
-        <Content />
+        <Content/>
       </div>
     </article>
   </Section>
 
-  <Footer />
+  <Footer/>
 </Layout>
 
 <style>

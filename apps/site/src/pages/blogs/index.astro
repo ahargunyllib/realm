@@ -31,7 +31,7 @@ const sortedPosts = blogEntries.sort(
           {sortedPosts.map((entry) => (
             <article class="post-item">
               <a
-                href={`/blogs/${entry.slug}`}
+                href={`/blogs/${entry.id}`}
                 data-umami-event="content-click"
                 data-umami-event-type="blog"
                 data-umami-event-title={entry.data.title}
@@ -57,7 +57,7 @@ const sortedPosts = blogEntries.sort(
       )}
   </Section>
 
-  <Footer />
+  <Footer/>
 </Layout>
 
 <style>

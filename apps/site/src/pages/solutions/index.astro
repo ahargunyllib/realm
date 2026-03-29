@@ -41,7 +41,7 @@ const getPlatformDisplay = (platform: string): string => {
           {sortedSolutions.map((entry) => (
             <article class="solution-item">
               <a
-                href={`/solutions/${entry.slug}`}
+                href={`/solutions/${entry.id}`}
                 data-umami-event="content-click"
                 data-umami-event-type="solution"
                 data-umami-event-title={entry.data.title}
@@ -72,7 +72,7 @@ const getPlatformDisplay = (platform: string): string => {
       )}
   </Section>
 
-  <Footer />
+  <Footer/>
 </Layout>
 
 <style>

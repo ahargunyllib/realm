@@ -16,11 +16,11 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-      "pnpm dlx ultracite@latest fix"
+      "pnpm fix"
     ]
   },
   "scripts": {
-    "check": "pnpm dlx ultracite@latest check",
-    "fix": "pnpm dlx ultracite@latest fix"
+    "check": "pnpm dlx ultracite check",
+    "fix": "pnpm dlx ultracite fix"
   }
 }
