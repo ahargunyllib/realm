@@ -100,7 +100,7 @@ These events are tracked automatically by Umami without any custom code:
 
 **Implementation:** Script-based tracking in `cookie-consent.astro`
 
-**Code location:** `apps/site/src/components/cookie-consent.astro`
+**Code location:** `apps/www/src/components/cookie-consent.astro`
 
 **Why this matters:** Compliance documentation and understanding user privacy preferences.
 
@@ -127,9 +127,9 @@ These events are tracked automatically by Umami without any custom code:
 **Implementation:** Inline tracking with `data-umami-event` attributes
 
 **Code locations:**
-- `apps/site/src/pages/blogs/index.astro`
-- `apps/site/src/pages/writeups/index.astro`
-- `apps/site/src/pages/solutions/index.astro`
+- `apps/www/src/pages/blogs/index.astro`
+- `apps/www/src/pages/writeups/index.astro`
+- `apps/www/src/pages/solutions/index.astro`
 
 **Why this matters:** Understanding which content resonates with readers drives content strategy decisions.
 
@@ -158,7 +158,7 @@ These events are tracked automatically by Umami without any custom code:
 - Domain differs from current site domain
 - Link doesn't already have a `data-umami-event` attribute
 
-**Code location:** `apps/site/src/components/umami.astro:74-98`
+**Code location:** `apps/www/src/components/umami.astro:74-98`
 
 **Why this matters:** Shows what external resources users find valuable and where your content drives traffic.
 
@@ -447,7 +447,7 @@ All `data-umami-event-*` attributes will be sent as event properties.
 
 ### Component: `umami.astro`
 
-**Location:** `apps/site/src/components/umami.astro`
+**Location:** `apps/www/src/components/umami.astro`
 
 **Props:**
 ```typescript

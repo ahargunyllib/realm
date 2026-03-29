@@ -180,7 +180,7 @@ The cookie consent follows the editorial aesthetic:
 - Matches the content-width container
 
 ```astro
-<!-- apps/site/src/components/cookie-consent.astro -->
+<!-- apps/www/src/components/cookie-consent.astro -->
 <div class="cookie-notice">
   <div class="notice-container">
     <div class="notice-content">
@@ -312,19 +312,19 @@ All text meets WCAG AA standards:
 ## File References
 
 **Core Styles:**
-- `apps/site/src/styles/global.css` - Design tokens, base styles, typography
-- `apps/site/src/components/layout.astro` - Page layout structure
-- `apps/site/src/components/cookie-consent.astro` - Editorial consent notice
+- `apps/www/src/styles/global.css` - Design tokens, base styles, typography
+- `apps/www/src/components/layout.astro` - Page layout structure
+- `apps/www/src/components/cookie-consent.astro` - Editorial consent notice
 
 **Component Examples:**
-- `apps/site/src/components/hero.astro` - Typography hierarchy
-- `apps/site/src/components/footer.astro` - Navigation patterns
-- `apps/site/src/components/section.astro` - Spacing rhythm
+- `apps/www/src/components/hero.astro` - Typography hierarchy
+- `apps/www/src/components/footer.astro` - Navigation patterns
+- `apps/www/src/components/section.astro` - Spacing rhythm
 
 **Documentation:**
-- `apps/site/docs/CONTENT_GUIDE.md` - Content writing guidelines
-- `apps/site/docs/DESIGN_SYSTEM.md` - This document
-- `apps/site/docs/ANALYTICS.md` - Analytics implementation and tracking
+- `apps/www/docs/CONTENT_GUIDE.md` - Content writing guidelines
+- `apps/www/docs/DESIGN_SYSTEM.md` - This document
+- `apps/www/docs/ANALYTICS.md` - Analytics implementation and tracking
 
 ---
 

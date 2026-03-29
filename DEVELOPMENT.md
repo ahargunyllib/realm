@@ -55,10 +55,10 @@ packages:
 pnpm install
 
 # Install dependency in specific workspace
-pnpm --filter site add dependency-name
+pnpm --filter www add dependency-name
 
 # Run script in specific workspace
-pnpm --filter site dev
+pnpm --filter www dev
 
 # Run script in all workspaces
 pnpm -r dev
@@ -72,11 +72,11 @@ pnpm --filter "*" build
 ### Starting Development
 
 ```bash
-# Start the site application
-pnpm --filter site dev
+# Start the www application
+pnpm --filter www dev
 
 # Or navigate to the app directory
-cd apps/site
+cd apps/www
 pnpm dev
 ```
 
@@ -229,10 +229,10 @@ For applications, add integration tests:
 
 ```bash
 # Add Playwright for E2E testing
-pnpm --filter site add -D @playwright/test
+pnpm --filter www add -D @playwright/test
 
 # Run E2E tests
-pnpm --filter site test:e2e
+pnpm --filter www test:e2e
 ```
 
 ## 🚢 Deployment Strategy
@@ -243,10 +243,10 @@ Each application has its own deployment strategy:
 
 ```bash
 # Build application
-pnpm --filter site build
+pnpm --filter www build
 
 # Preview production build
-pnpm --filter site preview
+pnpm --filter www preview
 ```
 
 ### Package Publication
@@ -269,10 +269,10 @@ Monitor bundle sizes and performance:
 
 ```bash
 # Analyze bundle (if configured)
-pnpm --filter site analyze
+pnpm --filter www analyze
 
 # Build with stats
-pnpm --filter site build --stats
+pnpm --filter www build --stats
 ```
 
 ### Development Performance
@@ -290,7 +290,7 @@ pnpm --filter site build --stats
 pnpm -r tsc --noEmit
 
 # Check specific workspace
-pnpm --filter site tsc --noEmit
+pnpm --filter www tsc --noEmit
 ```
 
 ### Dependency Issues
@@ -303,7 +303,7 @@ pnpm list
 pnpm dedupe
 
 # Verify workspace dependencies
-pnpm --filter site list
+pnpm --filter www list
 ```
 
 ### Build Issues
