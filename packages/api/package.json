@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.3.0",
+    "openapi3-ts": "^4.4.0",
     "@realm/core": "workspace:*",
     "@realm/db": "workspace:*",
     "@realm/email": "workspace:*",

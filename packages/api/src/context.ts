@@ -9,22 +9,22 @@ import type { KVStore } from "@realm/kv";
 import type { QueueProducer } from "@realm/queue";
 import type { R2Storage } from "@realm/storage";
 
-export interface Env {
+export type Env = {
   DB: D1Database;
   KV: KVNamespace;
   STORAGE: R2Bucket;
   QUEUE: Queue;
   BREVO_API_KEY: string;
-}
+};
 
-export interface Context {
+export type Context = {
   db: Db;
   kv: KVStore;
   storage: R2Storage;
   queue: QueueProducer;
   email: EmailService;
   env: Env;
-}
+};
 
 export const createContext = (env: Env): Context => ({
   db: createDb(env.DB),

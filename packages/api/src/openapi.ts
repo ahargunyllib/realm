@@ -2,10 +2,11 @@ import {
   OpenApiGeneratorV3,
   OpenAPIRegistry,
 } from "@asteasolutions/zod-to-openapi";
+import type { OpenAPIObject } from "openapi3-ts/oas30";
 
 export const registry = new OpenAPIRegistry();
 
-export const generateOpenAPIDocument = () => {
+export const generateOpenAPIDocument = (): OpenAPIObject => {
   const generator = new OpenApiGeneratorV3(registry.definitions);
   return generator.generateDocument({
     openapi: "3.0.0",

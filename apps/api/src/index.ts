@@ -13,7 +13,7 @@ app.all("/trpc/*", (c) =>
     req: c.req.raw,
     router: appRouter,
     createContext: () => createContext(c.env),
-  }),
+  })
 );
 
 app.get("/swagger/spec", (c) => c.json(generateOpenAPIDocument()));
