@@ -21,6 +21,8 @@
   },
   "scripts": {
     "check": "pnpm dlx ultracite check",
-    "fix": "pnpm dlx ultracite fix"
+    "fix": "pnpm dlx ultracite fix",
+    "typecheck": "pnpm --filter \"*\" typecheck",
+    "test": "pnpm --filter \"*\" test"
   }
 }
