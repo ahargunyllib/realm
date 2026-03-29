@@ -1,0 +1,133 @@
+---
+import Footer from "@/components/footer.astro";
+import Layout from "@/components/layout.astro";
+import Section from "@/components/section.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const solutionEntries = await getCollection("solution");
+  return solutionEntries.map((solutionEntry) => ({
+    params: { slug: solutionEntry.id },
+    props: { entry: solutionEntry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const getPlatformDisplay = (platform: string): string => {
+  const displays: Record<string, string> = {
+    codeforces: "Codeforces",
+    leetcode: "LeetCode",
+    atcoder: "AtCoder",
+    tlx: "TLX",
+    other: "Other",
+  };
+  return displays[platform] ?? platform;
+};
+---
+
+<Layout
+  title={`${entry.data.title} - Nugraha Billy Viandy`}
+  description={`Solution for ${entry.data.title} from ${getPlatformDisplay(entry.data.platform)}`}
+  canonical={`https://ahargunyllib.dev/solutions/${entry.id}`}
+>
+  <Section>
+    <nav class="back-nav">
+      <a href="/solutions" class="back-link">← Back to Solutions</a>
+    </nav>
+
+    <article class="solution-post">
+      <header class="post-header">
+        <h1>{entry.data.title}</h1>
+        <div class="post-meta">
+          <div class="solution-meta text-small text-tertiary">
+            <span>{getPlatformDisplay(entry.data.platform)}</span>
+            {" · "}
+            <span class="capitalize">{entry.data.difficulty}</span>
+            {" · "}
+            <time class="mono">
+              {new Date(entry.data.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+            </time>
+          </div>
+          <div class="post-tags mono text-tertiary">
+            {entry.data.tags.join(" · ")}
+          </div>
+          <a
+            href={entry.data.problemUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="problem-link"
+          >
+            View Problem →
+          </a>
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content/>
+      </div>
+    </article>
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .back-nav {
+    margin-bottom: var(--space-6);
+  }
+
+  .back-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .post-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .post-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .solution-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .post-tags {
+    font-size: var(--text-small);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .problem-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-size: var(--text-small);
+    transition: color 0.2s;
+  }
+
+  .problem-link:hover {
+    color: var(--color-text-primary);
+  }
+</style>

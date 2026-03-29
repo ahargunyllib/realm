@@ -1,0 +1,50 @@
+---
+import type { Team } from "@/data/types";
+
+type Props = {
+  items: Team[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="teams-list">
+  {items.map((team) => (
+      <div class="team-item">
+        {team.url ? (
+          <a href={team.url} class="team-name">
+            {team.name}
+          </a>
+        ) : (
+          <span class="team-name">{team.name}</span>
+        )}
+        {team.description && (
+          <span class="team-description text-tertiary text-small">
+            {" "}
+            · {team.description}
+          </span>
+        )}
+      </div>
+    ))}
+</div>
+
+<style>
+  .teams-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .team-item {
+    line-height: var(--leading-normal);
+  }
+
+  .team-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .team-description {
+    font-size: var(--text-small);
+  }
+</style>

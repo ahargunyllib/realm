@@ -1,0 +1,31 @@
+---
+import Footer from "@/components/footer.astro";
+import Layout from "@/components/layout.astro";
+import Section from "@/components/section.astro";
+---
+
+<Layout
+  title="Shorts - Nugraha Billy Viandy"
+  description="Quick thoughts, learnings, and updates."
+  canonical="https://ahargunyllib.dev/shorts"
+>
+  <Section>
+    <h1>Shorts</h1>
+    <p class="text-secondary" style="margin-bottom: 48px;">
+      Quick thoughts, learnings, and updates.
+    </p>
+
+    <div class="empty-state">
+      <p class="text-secondary">No shorts yet. Coming soon.</p>
+    </div>
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+</style>

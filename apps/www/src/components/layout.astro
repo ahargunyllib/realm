@@ -1,0 +1,108 @@
+---
+import "@/styles/global.css";
+import Umami from "./umami.astro";
+import CookieConsent from "./cookie-consent.astro";
+
+type Props = {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+};
+
+const { title, description, canonical, ogImage } = Astro.props;
+const siteUrl = "https://ahargunyllib.dev";
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = ogImage
+  ? new URL(ogImage, siteUrl).href
+  : `${siteUrl}/og-image.png`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Nugraha Billy Viandy",
+  url: siteUrl,
+  jobTitle: "Software Engineer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Malang",
+    addressCountry: "Indonesia",
+  },
+  email: "contact@ahargunyllib.dev",
+  sameAs: ["https://twitter.com/53kwaf", "https://github.com/ahargunyllib"],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content={Astro.generator}>
+
+    <title>{title}</title>
+    <meta name="description" content={description}>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl}>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#fafafa">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Preload Critical Fonts -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap"
+      as="style"
+    >
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      as="style"
+    >
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    >
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={canonicalUrl}>
+    <meta property="og:image" content={ogImageUrl}>
+    <meta property="og:site_name" content="Nugraha Billy Viandy">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ahargunyllib">
+    <meta name="twitter:creator" content="@ahargunyllib">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={ogImageUrl}>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}/>
+
+    <Umami websiteId="48062ad1-90e3-48a6-9691-571c063ea4a9"/>
+  </head>
+  <body>
+    <div class="container">
+      <slot/>
+    </div>
+    <CookieConsent/>
+  </body>
+</html>

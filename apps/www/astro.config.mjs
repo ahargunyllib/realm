@@ -1,0 +1,14 @@
+// @ts-check
+import cloudflare from "@astrojs/cloudflare";
+import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  site: "https://ahargunyllib.dev",
+  adapter: cloudflare(),
+  integrations: [mdx(), sitemap()],
+  redirects: {
+    "/analytics": "https://cloud.umami.is/share/eRIQq2WDxJVgvbcV",
+  },
+});

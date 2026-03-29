@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import Footer from "@/components/footer.astro";
+import Layout from "@/components/layout.astro";
+import Section from "@/components/section.astro";
+
+const solutionEntries = await getCollection("solution");
+const sortedSolutions = solutionEntries.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const getPlatformDisplay = (platform: string): string => {
+  const displays: Record<string, string> = {
+    codeforces: "Codeforces",
+    leetcode: "LeetCode",
+    atcoder: "AtCoder",
+    tlx: "TLX",
+    other: "Other",
+  };
+  return displays[platform] ?? platform;
+};
+---
+
+<Layout
+  title="Solutions - Nugraha Billy Viandy"
+  description="Competitive programming solutions and explanations."
+  canonical="https://ahargunyllib.dev/solutions"
+>
+  <Section>
+    <h1>Solutions</h1>
+    <p class="text-secondary" style="margin-bottom: 48px;">
+      Solutions and explanations for competitive programming problems.
+    </p>
+
+    {sortedSolutions.length === 0 ? (
+        <div class="empty-state">
+          <p class="text-secondary">No solutions yet. Check back soon.</p>
+        </div>
+      ) : (
+        <div class="solutions-list">
+          {sortedSolutions.map((entry) => (
+            <article class="solution-item">
+              <a
+                href={`/solutions/${entry.id}`}
+                data-umami-event="content-click"
+                data-umami-event-type="solution"
+                data-umami-event-title={entry.data.title}
+                data-umami-event-tags={entry.data.tags.join(" · ")}
+                data-umami-event-location="list"
+              >
+                <h2>{entry.data.title}</h2>
+              </a>
+              <div class="solution-meta text-small text-tertiary">
+                <span>{getPlatformDisplay(entry.data.platform)}</span>
+                {" · "}
+                <span class="capitalize">{entry.data.difficulty}</span>
+                {" · "}
+                <span>
+                  {new Date(entry.data.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+              <div class="solution-tags mono text-tertiary">
+                {entry.data.tags.join(" · ")}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .solutions-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .solution-item {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .solution-item:last-child {
+    border-bottom: none;
+  }
+
+  .solution-item h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .solution-meta {
+    margin-bottom: var(--space-2);
+  }
+
+  .solution-tags {
+    font-size: var(--text-small);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+</style>

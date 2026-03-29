@@ -1,0 +1,110 @@
+---
+import { getCollection } from "astro:content";
+import Footer from "@/components/footer.astro";
+import Layout from "@/components/layout.astro";
+import Section from "@/components/section.astro";
+
+const writeupEntries = await getCollection("writeup");
+const sortedWriteups = writeupEntries.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<Layout
+  title="Writeups - Nugraha Billy Viandy"
+  description="CTF and competitive programming writeups with solutions and explanations."
+  canonical="https://ahargunyllib.dev/writeups"
+>
+  <Section>
+    <h1>Writeups</h1>
+    <p class="text-secondary" style="margin-bottom: 48px;">
+      Solutions and explanations for CTF challenges and competitive programming
+      problems.
+    </p>
+
+    {sortedWriteups.length > 0 ? (
+        <div class="writeups-list">
+          {sortedWriteups.map((entry) => (
+            <article class="writeup-item">
+              <a
+                href={`/writeups/${entry.id}`}
+                data-umami-event="content-click"
+                data-umami-event-type="writeup"
+                data-umami-event-title={entry.data.title}
+                data-umami-event-tags={entry.data.tags.join(" · ")}
+                data-umami-event-location="list"
+              >
+                <h2>{entry.data.title}</h2>
+              </a>
+              <div class="writeup-meta text-small text-tertiary">
+                <span>{entry.data.competition}</span>
+                {" · "}
+                <span class="capitalize">{entry.data.category.join(" · ")}</span>
+                {entry.data.difficulty && (
+                  <>
+                    {" · "}
+                    <span class="capitalize">{entry.data.difficulty}</span>
+                  </>
+                )}
+                {" · "}
+                <span>
+                  {new Date(entry.data.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+              <div class="writeup-tags mono text-tertiary">
+                {entry.data.tags.join(" · ")}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <p class="text-secondary">No writeups yet. Coming soon.</p>
+        </div>
+      )}
+  </Section>
+
+  <Footer/>
+</Layout>
+
+<style>
+  .writeups-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .writeup-item {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .writeup-item:last-child {
+    border-bottom: none;
+  }
+
+  .writeup-item h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .writeup-meta {
+    margin-bottom: var(--space-2);
+  }
+
+  .writeup-tags {
+    font-size: var(--text-small);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  .empty-state {
+    padding: var(--space-3) 0;
+    text-align: center;
+  }
+</style>
