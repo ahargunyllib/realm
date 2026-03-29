@@ -2,25 +2,9 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'apps/**'
-      - 'packages/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '!**/*.md'
-      - '!**/README*'
+    branches: [main]
   pull_request:
-    branches:
-      - main
-    paths:
-      - 'apps/**'
-      - 'packages/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '!**/*.md'
-      - '!**/README*'
+    branches: [main]
 
 jobs:
   lint:
