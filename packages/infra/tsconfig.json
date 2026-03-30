@@ -1,0 +1,8 @@
+{
+  "extends": "@realm/tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["alchemy.run.ts"]
+}

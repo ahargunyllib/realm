@@ -1,0 +1,25 @@
+{
+  "name": "@realm/email",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@getbrevo/brevo": "^2.2.0"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

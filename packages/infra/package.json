@@ -1,0 +1,20 @@
+{
+  "name": "@realm/infra",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx alchemy.run.ts",
+    "deploy": "tsx alchemy.run.ts",
+    "destroy": "ALCHEMY_DESTROY=true tsx alchemy.run.ts"
+  },
+  "dependencies": {
+    "alchemy": "^0.32.0"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "tsx": "^4.19.0",
+    "typescript": "catalog:"
+  }
+}
