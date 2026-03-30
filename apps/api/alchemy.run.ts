@@ -24,6 +24,9 @@ export const worker = await Worker("api", {
     },
   },
   domains: ["api.ahargunyllib.dev"],
+  dev: {
+    port: 3000,
+  },
 });
 
 await app.finalize();
