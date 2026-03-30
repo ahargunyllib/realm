@@ -4,12 +4,19 @@
   "author": "ahargunyllib",
   "packageManager": "pnpm@10.14.0",
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "alchemy": "^0.90.1",
+      "typescript": "^5.9.3"
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "2.3.6",
+    "alchemy": "catalog:",
     "lefthook": "^2.0.4",
     "typescript": "catalog:",
     "ultracite": "6.3.4"
