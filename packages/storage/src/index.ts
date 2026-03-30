@@ -9,7 +9,7 @@ export class R2Storage {
     key: string,
     body: ReadableStream | ArrayBuffer | string,
     options?: R2PutOptions
-  ): Promise<R2Object> {
+  ): Promise<R2Object | null> {
     return this.bucket.put(key, body, options);
   }
 

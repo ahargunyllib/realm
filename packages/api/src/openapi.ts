@@ -3,6 +3,7 @@ import {
   OpenAPIRegistry,
 } from "@asteasolutions/zod-to-openapi";
 import type { OpenAPIObject } from "openapi3-ts/oas30";
+import "./dtos/index";
 
 export const registry = new OpenAPIRegistry();
 

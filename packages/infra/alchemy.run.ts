@@ -28,7 +28,7 @@ const queue = await Queue("queue", {
   name: "realm-queue",
 });
 
-const api = await Worker("api", {
+const _api = await Worker("api", {
   name: "realm-api",
   entrypoint: "../apps/api/src/index.ts",
   compatibilityDate: "2025-06-15",
@@ -42,7 +42,5 @@ const api = await Worker("api", {
   domains: ["api.ahargunyllib.dev"],
   url: true,
 });
-
-console.log("API URL:", api.url);
 
 await app.finalize();

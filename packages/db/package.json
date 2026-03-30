@@ -24,6 +24,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250620.0",
     "@realm/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
     "drizzle-kit": "^0.31.0",
     "typescript": "catalog:"
   }
