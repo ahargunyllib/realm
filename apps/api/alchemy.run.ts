@@ -1,7 +1,16 @@
 import alchemy from "alchemy";
 import { Worker } from "alchemy/cloudflare";
+import { CloudflareStateStore } from "alchemy/state";
 
-const app = await alchemy("realm-api");
+const app = await alchemy("realm-api", {
+  stateStore:
+    process.env.NODE_ENV === "production"
+      ? (scope) =>
+          new CloudflareStateStore(scope, {
+            scriptName: "realm-api-state-store",
+          })
+      : undefined, // Uses default FileSystemStateStore
+});
 
 export const worker = await Worker("api", {
   name: "realm-api",

@@ -5,8 +5,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "dev": "alchemy dev --app realm-api",
-    "destroy": "alchemy destroy --app realm-api",
-    "deploy": "alchemy deploy --app realm-api"
+    "destroy": "NODE_ENV=production alchemy destroy --app realm-api",
+    "deploy": "NODE_ENV=production alchemy deploy --app realm-api"
   },
   "dependencies": {
     "alchemy": "catalog:",
