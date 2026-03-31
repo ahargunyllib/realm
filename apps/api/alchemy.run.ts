@@ -49,8 +49,8 @@ if (process.env.PULL_REQUEST) {
     issueNumber: Number(process.env.PULL_REQUEST),
     body: `### Preview Deployment
 
-**Commit:** \`${process.env.COMMIT_SHA}\`
-**Preview URL:** ${`https://${worker.url}`}
+**Commit:** \`${process.env.GITHUB_SHA}\`
+**Preview URL:** ${worker.url}
 **Deployed at:** ${new Date().toUTCString()}`,
   });
 }
