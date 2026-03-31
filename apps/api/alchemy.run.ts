@@ -45,7 +45,7 @@ if (process.env.PULL_REQUEST) {
   // it will auto-update with each push
   await GitHubComment("preview-comment", {
     owner: "ahargunyllib",
-    repository: "ahargunyllib/realm",
+    repository: "realm",
     issueNumber: Number(process.env.PULL_REQUEST),
     body: `### Preview Deployment
 
