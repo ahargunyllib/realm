@@ -52,7 +52,7 @@
       }
     },
     {
-      "includes": ["apps/server/**"],
+      "includes": ["apps/api/**"],
       "linter": {
         "rules": {
           "suspicious": {

@@ -1,0 +1,17 @@
+{
+  "name": "api",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "alchemy dev --app realm-api"
+  },
+  "dependencies": {
+    "alchemy": "catalog:",
+    "hono": "^4.7.9"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
