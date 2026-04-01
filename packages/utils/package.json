@@ -14,5 +14,8 @@
   "devDependencies": {
     "@realm/tsconfig": "workspace:*",
     "typescript": "catalog:"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.7"
   }
 }
