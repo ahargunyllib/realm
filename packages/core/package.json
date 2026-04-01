@@ -1,0 +1,22 @@
+{
+  "name": "@realm/core",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "dependencies": {
+    "@realm/db": "workspace:*",
+    "@realm/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
