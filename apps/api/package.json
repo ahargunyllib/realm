@@ -7,6 +7,9 @@
     "dev": "alchemy dev --app realm-api"
   },
   "dependencies": {
+    "@realm/api": "workspace:*",
+    "@realm/db": "workspace:*",
+    "@trpc/server": "catalog:",
     "alchemy": "catalog:",
     "hono": "^4.7.9"
   },
