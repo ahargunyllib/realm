@@ -18,5 +18,8 @@
   "devDependencies": {
     "@realm/tsconfig": "workspace:*",
     "typescript": "catalog:"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   }
 }

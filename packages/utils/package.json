@@ -17,5 +17,8 @@
   },
   "dependencies": {
     "nanoid": "^5.1.7"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   }
 }
