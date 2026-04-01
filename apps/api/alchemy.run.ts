@@ -20,10 +20,8 @@ const db = await D1Database("db", {
 });
 
 export const worker = await Worker("api", {
-  name: "realm-api",
+  name: `realm-api-${app.stage}`,
   entrypoint: "./src/index.ts",
-  url: true,
-  adopt: true,
   compatibilityDate: "2026-04-01",
   compatibilityFlags: ["nodejs_compat"],
   bindings: {
@@ -46,7 +44,7 @@ export const worker = await Worker("api", {
       persist: true,
     },
   },
-  domains: ["api.ahargunyllib.dev"],
+  domains: app.stage === "prod" ? ["api.ahargunyllib.dev"] : undefined,
   dev: {
     port: 3000,
   },
