@@ -266,3 +266,6 @@ $RECYCLE.BIN/
 
 # Alchemy
 *.alchemy
+
+# Tanstack
+*.tanstack

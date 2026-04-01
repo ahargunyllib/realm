@@ -1,0 +1,29 @@
+{
+  "name": "dashboard",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "alchemy dev --app realm-dashboard",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@realm/api": "workspace:*",
+    "@tanstack/react-router": "^1.168.10",
+    "@tanstack/react-router-devtools": "^1.166.11",
+    "@trpc/client": "catalog:",
+    "alchemy": "catalog:",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "@tanstack/devtools-vite": "^0.6.0",
+    "@tanstack/router-plugin": "^1.167.12",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "catalog:",
+    "vite": "^8.0.3",
+    "vite-tsconfig-paths": "^6.1.1"
+  }
+}
