@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@realm/ui/components/tooltip";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
@@ -8,7 +9,7 @@ const router = createRouter({
   defaultPendingComponent: () => <div>Loading...</div>,
   defaultNotFoundComponent: () => <div>Not Found</div>,
   Wrap({ children }: { children: React.ReactNode }) {
-    return <> {children}</>;
+    return <TooltipProvider>{children}</TooltipProvider>;
   },
 });
 

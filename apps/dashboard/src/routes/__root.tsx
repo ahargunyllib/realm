@@ -1,3 +1,4 @@
+import "@realm/ui/globals.css";
 import {
   HeadContent,
   Outlet,
