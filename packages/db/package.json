@@ -1,0 +1,25 @@
+{
+  "name": "@realm/db",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "drizzle-kit": "^0.31.10",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2"
+  }
+}
