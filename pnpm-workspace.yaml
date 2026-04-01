@@ -3,5 +3,9 @@ packages:
   - packages/*
 
 catalog:
+  "@trpc/client": ^11.16.0
+  "@trpc/server": ^11.16.0
   alchemy: ^0.90.1
+  hono: ^4.10.6
   typescript: ^5.9.3
+  zod: ^4.3.6

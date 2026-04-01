@@ -10,8 +10,12 @@
       "packages/*"
     ],
     "catalog": {
+      "@trpc/client": "^11.16.0",
+      "@trpc/server": "^11.16.0",
       "alchemy": "^0.90.1",
-      "typescript": "^5.9.3"
+      "hono": "^4.10.6",
+      "typescript": "^5.9.3",
+      "zod": "^4.3.6"
     }
   },
   "devDependencies": {
@@ -30,6 +34,7 @@
     "check": "pnpm dlx ultracite check",
     "fix": "pnpm dlx ultracite fix",
     "typecheck": "pnpm --filter \"*\" typecheck",
-    "test": "pnpm --filter \"*\" test"
+    "test": "pnpm --filter \"*\" test",
+    "dev:api": "pnpm --filter api dev"
   }
 }
