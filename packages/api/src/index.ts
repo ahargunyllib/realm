@@ -1,2 +1,2 @@
 export { createContext } from "./context";
-export { trpcRouter } from "./routers";
+export { trpcRouter, type TRPCRouter } from "./routers";
