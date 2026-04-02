@@ -102,6 +102,9 @@ importers:
       '@realm/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@realm/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.2.2(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.7.1)(@types/node@24.10.1)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))

@@ -9,6 +9,7 @@
   "dependencies": {
     "@realm/api": "workspace:*",
     "@realm/ui": "workspace:*",
+    "@realm/utils": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-form": "^1.28.6",
     "@tanstack/react-query": "^5.96.1",

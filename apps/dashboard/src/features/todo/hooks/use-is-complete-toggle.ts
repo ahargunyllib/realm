@@ -1,8 +1,9 @@
-import { queryClient } from "@/shared/lib/query-client";
 import { trpc } from "@/shared/lib/trpc";
+import { tryCatch } from "@realm/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { queryClient } from "@/shared/lib/query-client";
 
 export const useIsCompleteToggle = ({
   todo: { id, isCompleted: initialIsCompleted },
@@ -37,23 +38,21 @@ export const useIsCompleteToggle = ({
         return;
       }
 
-      await mutation.mutateAsync(
-        { id, isCompleted: valueToSync },
-        {
-          onSuccess: () => {
-            lastIsCompleted.current = valueToSync;
-            queryClient.invalidateQueries({
-              queryKey: trpc.todoRouter.getAllTodos.queryKey(),
-            });
-          },
-          onError: () => {
-            setIsCompleted(lastIsCompleted.current);
-            toast.error("Error updating todo", {
-              description: "Please try again.",
-            });
-          },
-        }
+      const { error } = await tryCatch(
+        mutation.mutateAsync({ id, isCompleted: valueToSync })
       );
+      if (error) {
+        setIsCompleted(lastIsCompleted.current);
+        toast.error("Error updating todo", {
+          description: "Please try again.",
+        });
+        return;
+      }
+
+      lastIsCompleted.current = valueToSync;
+      queryClient.invalidateQueries({
+        queryKey: trpc.todoRouter.getAllTodos.queryKey(),
+      });
     }, 500);
   };
 
