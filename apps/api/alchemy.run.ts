@@ -15,7 +15,7 @@ const app = await alchemy("realm-api", {
 });
 
 const db = await D1Database("db", {
-  name: "realm-db",
+  name: `realm-db-${app.stage}`,
   migrationsDir: "./node_modules/@realm/db/migrations",
 });
 
