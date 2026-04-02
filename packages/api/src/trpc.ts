@@ -16,7 +16,6 @@ const baseProcedure = t.procedure.use(async (opts) => {
 
   if (response.ok) {
     ctx.logger.info("trpc request completed", {
-      context: { requestId: ctx.requestId },
       path,
       type,
       durationMs,
