@@ -1,6 +1,8 @@
 import { trpcServer } from "@hono/trpc-server";
 import { createContext, trpcRouter } from "@realm/api";
 import type { D1Database } from "@realm/db";
+import { createLogger } from "@realm/logger";
+import { createNanoId } from "@realm/utils";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
@@ -29,13 +31,19 @@ app.use(
   "/trpc/*",
   trpcServer({
     router: trpcRouter,
-    createContext: (opts, c) =>
-      createContext({
+    createContext: (opts, c) => {
+      const requestId = createNanoId();
+      const customLogger = createLogger({ requestId });
+
+      return createContext({
         env: {
           db: c.env.DB,
         },
         fetchCreateContextFnOptions: opts,
-      }),
+        logger: customLogger,
+        requestId,
+      });
+    },
   })
 );
 
