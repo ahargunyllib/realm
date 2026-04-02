@@ -1,6 +1,6 @@
 import { createTodoService, type TodoService } from "@realm/core";
-import { createTodoQueries, type DB } from "@realm/db";
 import type { D1Database } from "@realm/db";
+import { createDB, createTodoQueries, type DB } from "@realm/db";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 
 type CreateContextOptions = {
@@ -11,7 +11,9 @@ type CreateContextOptions = {
 };
 
 export const createContext = ({ env }: CreateContextOptions): Context => {
-  const todoQueries = createTodoQueries(env.db);
+  const db = createDB(env.db);
+
+  const todoQueries = createTodoQueries(db);
 
   const todoServices = createTodoService(todoQueries);
 
