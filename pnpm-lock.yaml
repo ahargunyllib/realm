@@ -74,6 +74,12 @@ importers:
       '@realm/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@realm/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
+      '@realm/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       alchemy:
         specifier: 'catalog:'
         version: 0.90.1(@cloudflare/vite-plugin@1.30.2(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.7.1)(@types/node@24.10.1)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.78.0(@cloudflare/workers-types@4.20260329.1)))(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.7.1)(@types/node@24.10.1)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260317.1)(wrangler@4.78.0(@cloudflare/workers-types@4.20260329.1))
@@ -206,6 +212,9 @@ importers:
       '@realm/db':
         specifier: workspace:*
         version: link:../db
+      '@realm/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@realm/utils':
         specifier: workspace:*
         version: link:../utils
@@ -257,6 +266,15 @@ importers:
       drizzle-kit:
         specifier: ^0.31.10
         version: 0.31.10
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  packages/logger:
+    devDependencies:
+      '@realm/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
