@@ -1,6 +1,7 @@
 import { createTodoService, type TodoService } from "@realm/core";
 import type { D1Database } from "@realm/db";
-import { createDB, createTodoQueries, type DB } from "@realm/db";
+import { createDB, createTodoQueries } from "@realm/db";
+import type { LoggerType } from "@realm/logger";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 
 type CreateContextOptions = {
@@ -8,9 +9,15 @@ type CreateContextOptions = {
     db: D1Database;
   };
   fetchCreateContextFnOptions: FetchCreateContextFnOptions;
+  logger: LoggerType;
+  requestId: string;
 };
 
-export const createContext = ({ env }: CreateContextOptions): Context => {
+export const createContext = ({
+  env,
+  logger,
+  requestId,
+}: CreateContextOptions): Context => {
   const db = createDB(env.db);
 
   const todoQueries = createTodoQueries(db);
@@ -18,18 +25,18 @@ export const createContext = ({ env }: CreateContextOptions): Context => {
   const todoServices = createTodoService(todoQueries);
 
   return {
+    requestId,
+    logger,
     services: {
       todo: todoServices,
     },
-    env,
   };
 };
 
 export type Context = {
+  requestId: string;
+  logger: LoggerType;
   services: {
     todo: TodoService;
-  };
-  env: {
-    db: DB;
   };
 };

@@ -18,6 +18,7 @@
   "dependencies": {
     "@realm/db": "workspace:*",
     "@realm/core": "workspace:*",
+    "@realm/logger": "workspace:*",
     "@realm/utils": "workspace:*",
     "@trpc/server": "catalog:",
     "hono": "catalog:",

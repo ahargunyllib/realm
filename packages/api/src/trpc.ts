@@ -8,16 +8,32 @@ const t = initTRPC.context<Context>().create({
 });
 
 const baseProcedure = t.procedure.use(async (opts) => {
-  const { next } = opts;
+  const { ctx, next, path, type } = opts;
+  const startTime = Date.now();
 
   const response = await next();
+  const durationMs = Date.now() - startTime;
+
   if (response.ok) {
+    ctx.logger.info("trpc request completed", {
+      context: { requestId: ctx.requestId },
+      path,
+      type,
+      durationMs,
+      status: "success",
+    });
     return response;
   }
 
-  // TODO: Add logging here
-
   const { error } = response;
+  ctx.logger.error("trpc request failed", {
+    path,
+    type,
+    durationMs,
+    status: "error",
+    error,
+  });
+
   if (error.cause instanceof AppError) {
     const appError = error.cause;
     throw new TRPCError({
