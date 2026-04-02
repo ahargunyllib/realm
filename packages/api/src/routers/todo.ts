@@ -1,4 +1,3 @@
-import { createNanoIdWithPrefix } from "@realm/utils";
 import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -11,35 +10,32 @@ const getAllTodos = publicProcedure.query(async ({ ctx }) => {
 const createTodo = publicProcedure
   .input(
     z.object({
-      title: z.string(),
+      title: z.string().min(1, "Title is required"),
     })
   )
   .mutation(async ({ ctx, input }) => {
-    const todo = {
-      id: createNanoIdWithPrefix("todo"),
+    await ctx.services.todo.createTodo({
       title: input.title,
-      isCompleted: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    await ctx.services.todo.createTodo(todo);
+    });
   });
 
 const updateTodo = publicProcedure
   .input(
     z.object({
-      id: z.string(),
+      id: z.string().min(1, "ID is required"),
       title: z.string().optional(),
       isCompleted: z.boolean().optional(),
     })
   )
   .mutation(async ({ ctx, input }) => {
-    const { id, ...updateData } = input;
-    await ctx.services.todo.updateTodo(id, updateData);
+    await ctx.services.todo.updateTodo(input.id, {
+      title: input.title,
+      isCompleted: input.isCompleted,
+    });
   });
 
 const deleteTodo = publicProcedure
-  .input(z.object({ id: z.string() }))
+  .input(z.object({ id: z.string().min(1, "ID is required") }))
   .mutation(async ({ ctx, input }) => {
     await ctx.services.todo.deleteTodo(input.id);
   });

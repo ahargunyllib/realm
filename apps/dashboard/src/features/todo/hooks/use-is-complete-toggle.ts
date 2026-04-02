@@ -1,6 +1,8 @@
+import { queryClient } from "@/shared/lib/query-client";
 import { trpc } from "@/shared/lib/trpc";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 export const useIsCompleteToggle = ({
   todo: { id, isCompleted: initialIsCompleted },
@@ -18,7 +20,6 @@ export const useIsCompleteToggle = ({
   const mutation = useMutation(trpc.todoRouter.updateTodo.mutationOptions());
 
   const toggle = () => {
-    console.log("Toggling isCompleted for todo with id:", id);
     setIsCompleted((prev) => {
       const newValue = !prev;
       latestIsCompletedRef.current = newValue;
@@ -41,9 +42,15 @@ export const useIsCompleteToggle = ({
         {
           onSuccess: () => {
             lastIsCompleted.current = valueToSync;
+            queryClient.invalidateQueries({
+              queryKey: trpc.todoRouter.getAllTodos.queryKey(),
+            });
           },
           onError: () => {
             setIsCompleted(lastIsCompleted.current);
+            toast.error("Error updating todo", {
+              description: "Please try again.",
+            });
           },
         }
       );
