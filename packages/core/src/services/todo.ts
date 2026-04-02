@@ -1,5 +1,6 @@
 import type { TodoQueries } from "@realm/db";
-import { createNanoId } from "@realm/utils";
+import { createNanoId, tryCatch } from "@realm/utils";
+import { AppError, ErrorCode } from "../errors";
 import type { Todo } from "../types";
 
 export type TodoService = {
@@ -24,16 +25,46 @@ export const createTodoService = (todoQueries: TodoQueries): TodoService => ({
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    await todoQueries.createTodo(newTodo);
+    const { error } = await tryCatch(todoQueries.createTodo(newTodo));
+    if (error) {
+      throw new AppError(
+        ErrorCode.INTERNAL_SERVER_ERROR,
+        "Failed to create todo",
+        {
+          cause: error,
+          details: { todo: newTodo },
+        }
+      );
+    }
   },
   updateTodo: async (id, todo) => {
     const updatedFields: Partial<Todo> = {
       ...todo,
       updatedAt: new Date().toISOString(),
     };
-    await todoQueries.updateTodo(id, updatedFields);
+    const { error } = await tryCatch(todoQueries.updateTodo(id, updatedFields));
+    if (error) {
+      throw new AppError(
+        ErrorCode.INTERNAL_SERVER_ERROR,
+        "Failed to update todo",
+        {
+          cause: error,
+          details: { id, updatedFields },
+        }
+      );
+    }
   },
   deleteTodo: async (id) => {
-    await todoQueries.deleteTodo(id);
+    const { error } = await tryCatch(todoQueries.deleteTodo(id));
+    if (error) {
+      throw new AppError(
+        ErrorCode.INTERNAL_SERVER_ERROR,
+        "Failed to delete todo",
+        {
+          cause: error,
+          details: { id },
+        }
+      );
+    }
   },
 });

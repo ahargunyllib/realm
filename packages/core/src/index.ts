@@ -1,5 +1,8 @@
 export {
-  createTodoService,
-  type TodoService,
-} from "./services";
+  AppError,
+  ErrorCode,
+  type ErrorCodeType,
+  type ErrorMetadata,
+} from "./errors";
+export { createTodoService, type TodoService } from "./services";
 export type * from "./types";
