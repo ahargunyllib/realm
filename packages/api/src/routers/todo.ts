@@ -12,14 +12,12 @@ const createTodo = publicProcedure
   .input(
     z.object({
       title: z.string(),
-      description: z.string().optional(),
     })
   )
   .mutation(async ({ ctx, input }) => {
     const todo = {
       id: createNanoIdWithPrefix("todo"),
       title: input.title,
-      description: input.description,
       isCompleted: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -32,7 +30,7 @@ const updateTodo = publicProcedure
     z.object({
       id: z.string(),
       title: z.string().optional(),
-      description: z.string().optional(),
+      isCompleted: z.boolean().optional(),
     })
   )
   .mutation(async ({ ctx, input }) => {
