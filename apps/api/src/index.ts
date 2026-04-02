@@ -17,7 +17,18 @@ app.use(logger());
 app.use(
   "/*",
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin) => {
+      const allowedOrigins = [
+        "localhost",
+        "ahargunyllib.dev",
+        "ahargunyllib.workers.dev",
+      ];
+      if (
+        allowedOrigins.some((allowedOrigin) => origin.includes(allowedOrigin))
+      ) {
+        return origin;
+      }
+    },
     allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization", "trpc-accept"],
     credentials: true,
