@@ -6,7 +6,10 @@ import type { InsertTodo, SelectTodo } from "../schemas/todo";
 export type TodoQueries = {
   getAllTodos: () => Promise<SelectTodo[]>;
   createTodo: (todo: InsertTodo) => Promise<void>;
-  updateTodo: (id: string, todo: Partial<InsertTodo>) => Promise<void>;
+  updateTodo: (
+    id: string,
+    todo: Partial<InsertTodo>
+  ) => Promise<SelectTodo | null>;
   deleteTodo: (id: string) => Promise<void>;
 };
 
@@ -16,10 +19,16 @@ export const createTodoQueries = (db: DB): TodoQueries => ({
     await db.insert(schema.todoTable).values(todo);
   },
   updateTodo: async (id, todo) => {
-    await db
+    const [record] = await db
       .update(schema.todoTable)
       .set(todo)
-      .where(eq(schema.todoTable.id, id));
+      .where(eq(schema.todoTable.id, id))
+      .returning();
+    if (!record) {
+      return null;
+    }
+
+    return record;
   },
   deleteTodo: async (id) => {
     await db.delete(schema.todoTable).where(eq(schema.todoTable.id, id));
