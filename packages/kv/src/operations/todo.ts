@@ -3,7 +3,7 @@ import { KEYS } from "../keys";
 import type { KV } from "../kv";
 
 export type TodoOperations = {
-  getAllTodo: () => Promise<Todo[]>;
+  getAllTodo: () => Promise<Todo[] | null>;
   getTodo: (id: string) => Promise<Todo | null>;
   setAllTodo: (todos: Todo[]) => Promise<void>;
   setTodo: (id: string, todo: Todo) => Promise<void>;
@@ -15,7 +15,7 @@ export const createTodoOperations = (kv: KV): TodoOperations => ({
   getAllTodo: async () => {
     const todos = await kv.get(KEYS.todo.all);
     if (!todos) {
-      return [];
+      return null;
     }
 
     return JSON.parse(todos);
