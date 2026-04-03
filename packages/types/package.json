@@ -1,5 +1,5 @@
 {
-  "name": "@realm/core",
+  "name": "@realm/types",
   "type": "module",
   "exports": {
     ".": {
@@ -11,16 +11,11 @@
       "default": "./src/*.ts"
     }
   },
-  "dependencies": {
-    "@realm/db": "workspace:*",
-    "@realm/utils": "workspace:*"
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@realm/tsconfig": "workspace:*",
-    "@realm/types": "workspace:*",
     "typescript": "catalog:"
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
   }
 }

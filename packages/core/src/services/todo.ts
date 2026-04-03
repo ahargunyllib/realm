@@ -1,7 +1,7 @@
 import type { TodoQueries } from "@realm/db";
 import { createNanoId, tryCatch } from "@realm/utils";
+import type { Todo } from "@realm/types";
 import { AppError, ErrorCode } from "../errors";
-import type { Todo } from "../types";
 
 export type TodoService = {
   getAllTodos: () => Promise<Todo[]>;
