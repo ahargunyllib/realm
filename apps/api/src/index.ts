@@ -18,6 +18,7 @@ app.use(
   "/*",
   cors({
     origin: (origin) => {
+      // TODO: This is a temporary solution to allow CORS for localhost and our deployed domains. We should have a better solution for this in the future.
       const allowedOrigins = [
         "localhost",
         "ahargunyllib.dev",
