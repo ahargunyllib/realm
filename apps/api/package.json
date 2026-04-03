@@ -10,6 +10,7 @@
     "@hono/trpc-server": "^0.4.2",
     "@realm/api": "workspace:*",
     "@realm/db": "workspace:*",
+    "@realm/kv": "workspace:*",
     "@realm/logger": "workspace:*",
     "@realm/utils": "workspace:*",
     "alchemy": "catalog:",
