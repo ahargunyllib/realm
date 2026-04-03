@@ -1,6 +1,7 @@
 import { trpcServer } from "@hono/trpc-server";
 import { createContext, trpcRouter } from "@realm/api";
 import type { D1Database } from "@realm/db";
+import type { KVNamespaceType } from "@realm/kv";
 import { createLogger } from "@realm/logger";
 import { createNanoId } from "@realm/utils";
 import { Hono } from "hono";
@@ -10,6 +11,7 @@ import { logger } from "hono/logger";
 const app = new Hono<{
   Bindings: {
     DB: D1Database;
+    KV: KVNamespaceType;
   };
 }>();
 
@@ -50,10 +52,12 @@ app.use(
       return createContext({
         env: {
           db: c.env.DB,
+          kv: c.env.KV,
         },
         fetchCreateContextFnOptions: opts,
         logger: customLogger,
         requestId,
+        waitUntil: c.executionCtx.waitUntil,
       });
     },
   })
