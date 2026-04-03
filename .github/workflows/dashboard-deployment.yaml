@@ -14,7 +14,7 @@ on:
       - "!**/README*"
 
 concurrency:
-  group: preview-${{ github.event.pull_request.number }}-${{ github.sha }}
+  group: dashboard-${{ github.event.pull_request.number }}-${{ github.sha }}
   cancel-in-progress: false
 
 env:

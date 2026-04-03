@@ -14,7 +14,7 @@ on:
       - '!**/README*'
 
 concurrency:
-  group: production-main
+  group: production-www
   cancel-in-progress: true
 
 jobs:
