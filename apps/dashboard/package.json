@@ -1,0 +1,40 @@
+{
+  "name": "dashboard",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "alchemy dev --app realm-dashboard",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@realm/api": "workspace:*",
+    "@realm/ui": "workspace:*",
+    "@realm/utils": "workspace:*",
+    "@tailwindcss/vite": "catalog:",
+    "@tanstack/react-form": "^1.28.6",
+    "@tanstack/react-query": "^5.96.1",
+    "@tanstack/react-router": "^1.168.10",
+    "@tanstack/react-router-devtools": "^1.166.11",
+    "@trpc/client": "catalog:",
+    "@trpc/tanstack-react-query": "^11.16.0",
+    "alchemy": "catalog:",
+    "lucide-react": "^1.7.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sonner": "^2.0.7",
+    "superjson": "^2.2.6",
+    "tailwindcss": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "@tanstack/devtools-vite": "^0.6.0",
+    "@tanstack/router-plugin": "^1.167.12",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "catalog:",
+    "vite": "^8.0.3",
+    "vite-tsconfig-paths": "^6.1.1"
+  }
+}

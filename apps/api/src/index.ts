@@ -1,8 +1,68 @@
+import { trpcServer } from "@hono/trpc-server";
+import { createContext, trpcRouter } from "@realm/api";
+import type { D1Database } from "@realm/db";
+import type { KVNamespaceType } from "@realm/kv";
+import { createLogger } from "@realm/logger";
+import { createNanoId } from "@realm/utils";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 
-const app = new Hono();
+const app = new Hono<{
+  Bindings: {
+    DB: D1Database;
+    KV: KVNamespaceType;
+  };
+}>();
+
+app.use(logger());
+app.use(
+  "/*",
+  cors({
+    origin: (origin) => {
+      // TODO: This is a temporary solution to allow CORS for localhost and our deployed domains. We should have a better solution for this in the future.
+      const allowedOrigins = [
+        "localhost",
+        "ahargunyllib.dev",
+        "ahargunyllib.workers.dev",
+      ];
+      if (
+        allowedOrigins.some((allowedOrigin) => origin.includes(allowedOrigin))
+      ) {
+        return origin;
+      }
+    },
+    allowMethods: ["GET", "POST", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization", "trpc-accept"],
+    credentials: true,
+  })
+);
 
 app.get("/", (c) => c.text("Hello World"));
 app.get("/health", (c) => c.json({ status: "ok" }));
 
-export default app;
+app.use(
+  "/trpc/*",
+  trpcServer({
+    router: trpcRouter,
+    createContext: (opts, c) => {
+      const requestId = createNanoId();
+      const customLogger = createLogger({ requestId });
+
+      return createContext({
+        env: {
+          db: c.env.DB,
+          kv: c.env.KV,
+        },
+        fetchCreateContextFnOptions: opts,
+        logger: customLogger,
+        requestId,
+        waitUntil: c.executionCtx.waitUntil,
+      });
+    },
+  })
+);
+
+export default {
+  fetch: app.fetch,
+};

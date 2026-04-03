@@ -1,5 +1,5 @@
 import alchemy from "alchemy";
-import { Worker } from "alchemy/cloudflare";
+import { D1Database, KVNamespace, Worker } from "alchemy/cloudflare";
 import { GitHubComment } from "alchemy/github";
 import { CloudflareStateStore } from "alchemy/state";
 
@@ -14,12 +14,27 @@ const app = await alchemy("realm-api", {
   password: process.env.ALCHEMY_PASSWORD,
 });
 
+const db = await D1Database("db", {
+  name: `realm-db-${app.stage}`,
+  migrationsDir: "./node_modules/@realm/db/migrations",
+});
+
+const kv = await KVNamespace("kv", {
+  title: `realm-kv-${app.stage}`,
+});
+
 export const worker = await Worker("api", {
-  name: "realm-api",
+  name: `realm-api-${app.stage}`,
   entrypoint: "./src/index.ts",
-  url: true,
-  adopt: true,
-  bindings: {},
+  compatibilityDate: "2026-04-01",
+  compatibilityFlags: ["nodejs_compat"],
+  bindings: {
+    DB: db,
+    KV: kv,
+  },
+  bundle: {
+    external: ["bun:sqlite", "@libsql/client"],
+  },
   observability: {
     enabled: true,
     logs: {
@@ -34,7 +49,7 @@ export const worker = await Worker("api", {
       persist: true,
     },
   },
-  domains: ["api.ahargunyllib.dev"],
+  domains: app.stage === "prod" ? ["api.ahargunyllib.dev"] : undefined,
   dev: {
     port: 3000,
   },

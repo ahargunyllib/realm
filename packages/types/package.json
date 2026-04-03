@@ -1,0 +1,21 @@
+{
+  "name": "@realm/types",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@realm/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
