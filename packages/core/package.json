@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@realm/db": "workspace:*",
+    "@realm/kv": "workspace:*",
+    "@realm/logger": "workspace:*",
     "@realm/utils": "workspace:*"
   },
   "devDependencies": {
