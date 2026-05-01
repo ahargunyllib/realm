@@ -19,7 +19,7 @@
     "alchemy": "catalog:",
     "lefthook": "^2.0.4",
     "typescript": "catalog:",
-    "ultracite": "6.3.4"
+    "ultracite": "7.6.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
