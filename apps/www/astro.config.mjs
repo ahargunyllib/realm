@@ -10,11 +10,12 @@ const hiddenPages = ["/services"];
 export default defineConfig({
   site: "https://ahargunyllib.dev",
   adapter: cloudflare(),
-  // The site doesn't use Astro sessions. Without an explicit driver the
-  // Cloudflare adapter adds a SESSION KV binding that wrangler inherits from
-  // the previous deployment, which breaks deploys once that namespace is gone.
+  // The site doesn't use Astro sessions, so an in-memory driver is enough.
+  // Without an explicit driver the Cloudflare adapter adds a SESSION KV
+  // binding that wrangler inherits from the previous deployment, which breaks
+  // deploys once that namespace is gone.
   session: {
-    driver: sessionDrivers.memory(),
+    driver: sessionDrivers.lruCache(),
   },
   integrations: [
     mdx(),
