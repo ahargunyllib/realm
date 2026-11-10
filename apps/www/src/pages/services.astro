@@ -1,0 +1,490 @@
+---
+// Hidden page: not linked anywhere, noindex, and excluded from the sitemap.
+// Deliberately standalone (no shared Layout/Footer) so it reads as a
+// self-contained offer for prospective clients and payment gateway reviewers.
+import "@/styles/global.css";
+
+import { profile } from "@/data/profile";
+import { projects } from "@/data/projects";
+import {
+  featuredProjectNames,
+  paymentTerms,
+  policiesLastUpdated,
+  pricingNote,
+  serviceContact,
+  servicePackages,
+  servicePolicies,
+  serviceProcess,
+  servicesIntro,
+} from "@/data/services";
+import type { ServiceBillingUnit } from "@/data/types";
+
+const NON_DIGIT_REGEX = /\D/g;
+
+const siteUrl = "https://ahargunyllib.dev";
+const pageUrl = `${siteUrl}/services`;
+const title = `Services - ${profile.name}`;
+const description = servicesIntro.tagline;
+
+const priceFormatter = new Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
+  maximumFractionDigits: 0,
+});
+
+const billingUnitLabels: Record<ServiceBillingUnit, string> = {
+  project: "per project",
+  month: "per month",
+};
+
+const featuredProjects = featuredProjectNames.flatMap((name) => {
+  const project = projects.find((item) => item.name === name);
+  return project ? [project] : [];
+});
+
+const inquiryHref = `mailto:${serviceContact.email}?subject=${encodeURIComponent("Project inquiry")}`;
+const phoneDigits = serviceContact.phone?.replace(NON_DIGIT_REGEX, "") ?? "";
+
+const lastUpdatedLabel = new Date(policiesLastUpdated).toLocaleDateString(
+  "en-US",
+  { year: "numeric", month: "long", day: "numeric" }
+);
+
+const navItems = [
+  { href: "#services", label: "Services" },
+  { href: "#process", label: "Process" },
+  { href: "#payment", label: "Payment" },
+  ...servicePolicies.map((policy) => ({
+    href: `#${policy.id}`,
+    label: policy.title.split(" ")[0] ?? policy.title,
+  })),
+  { href: "#contact", label: "Contact" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content={Astro.generator}>
+
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href={pageUrl}>
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#fafafa">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    >
+
+    <!-- Link previews when shared with clients (chat apps, email) -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={pageUrl}>
+    <meta property="og:image" content={`${siteUrl}/og-image.png`}>
+    <meta property="og:site_name" content={profile.name}>
+    <meta name="twitter:card" content="summary_large_image">
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <p class="eyebrow mono">{`${profile.name} · Freelance`}</p>
+        <nav class="page-nav" aria-label="On this page">
+          {navItems.map((item) => (
+              <a href={item.href} class="text-small">
+                {item.label}
+              </a>
+            ))}
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <h1>{servicesIntro.title}</h1>
+          <p class="lead">{servicesIntro.tagline}</p>
+          <p class="text-secondary">{servicesIntro.description}</p>
+          <div class="actions">
+            <a href={inquiryHref} class="button button-primary">
+              Start a project
+            </a>
+            <a href="#services" class="button">View services</a>
+          </div>
+        </section>
+
+        <section id="services" class="block">
+          <h2>Services</h2>
+          <div class="packages">
+            {servicePackages.map((item) => (
+                <article class="package" id={item.id}>
+                  <h3 class="package-name">{item.name}</h3>
+                  <p class="package-summary text-secondary">{item.summary}</p>
+                  <div class="package-price">
+                    <span class="price-label text-small text-tertiary">
+                      Starting from
+                    </span>
+                    <span class="price-value">
+                      {priceFormatter.format(item.startingPrice)}
+                    </span>
+                    <span class="price-unit text-small text-secondary">
+                      {billingUnitLabels[item.billingUnit]}
+                    </span>
+                  </div>
+                  <p class="package-timeline mono text-tertiary">
+                    {item.timeline}
+                  </p>
+                  <ul class="package-includes">
+                    {item.includes.map((feature) => (
+                        <li>{feature}</li>
+                      ))}
+                  </ul>
+                </article>
+              ))}
+          </div>
+          <p class="note text-small text-secondary">{pricingNote}</p>
+        </section>
+
+        {featuredProjects.length > 0 && (
+            <section id="work" class="block">
+              <h2>Selected work</h2>
+              <div class="work-list">
+                {featuredProjects.map((project) => (
+                    <article class="work-item">
+                      <h3>{project.name}</h3>
+                      <p class="text-secondary">{project.description}</p>
+                      <p class="mono text-tertiary">
+                        {project.techStack.join(" · ")}
+                      </p>
+                      {(project.liveUrl ?? project.githubUrl) && (
+                        <div class="work-links">
+                          {project.liveUrl && (
+                            <a
+                              href={project.liveUrl}
+                              class="text-small"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              → Live
+                            </a>
+                          )}
+                          {project.githubUrl && (
+                            <a
+                              href={project.githubUrl}
+                              class="text-small"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              → GitHub
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </article>
+                  ))}
+              </div>
+            </section>
+          )}
+
+        <section id="process" class="block">
+          <h2>How we work together</h2>
+          <ol class="process">
+            {serviceProcess.map((step, index) => (
+                <li class="process-step">
+                  <span class="step-number mono text-tertiary">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p class="text-secondary">{step.description}</p>
+                  </div>
+                </li>
+              ))}
+          </ol>
+        </section>
+
+        <section id="payment" class="block">
+          <h2>Payment terms</h2>
+          <ul class="terms-list">
+            {paymentTerms.map((term) => (
+                <li>{term}</li>
+              ))}
+          </ul>
+        </section>
+
+        {servicePolicies.map((policy) => (
+            <section id={policy.id} class="block">
+              <h2>{policy.title}</h2>
+              <ul class="terms-list">
+                {policy.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+              </ul>
+            </section>
+          ))}
+
+        <p class="text-small text-tertiary">
+          Payment terms and policies last updated {lastUpdatedLabel}.
+        </p>
+
+        <section id="contact" class="block contact">
+          <h2>Let's talk about your project</h2>
+          <p class="text-secondary">{serviceContact.responseTime}</p>
+          <dl class="contact-list">
+            <div>
+              <dt class="text-small text-tertiary">Email</dt>
+              <dd>
+                <a href={inquiryHref}>{serviceContact.email}</a>
+              </dd>
+            </div>
+            {serviceContact.phone && (
+              <div>
+                <dt class="text-small text-tertiary">Phone / WhatsApp</dt>
+                <dd>
+                  <a href={`tel:+${phoneDigits}`}>{serviceContact.phone}</a>
+                  {" · "}
+                  <a
+                    href={`https://wa.me/${phoneDigits}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp
+                  </a>
+                </dd>
+              </div>
+            )}
+            <div>
+              <dt class="text-small text-tertiary">Location</dt>
+              <dd>{serviceContact.location}</dd>
+            </div>
+          </dl>
+          <div class="actions">
+            <a href={inquiryHref} class="button button-primary">
+              Start a project
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <p class="colophon text-small text-tertiary">
+        © {currentYear}
+        {" "}
+        {profile.name}
+      </p>
+    </div>
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .eyebrow {
+    margin-bottom: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .page-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .page-nav a {
+    border-bottom: none;
+    color: var(--color-text-secondary);
+  }
+
+  .hero {
+    margin-bottom: var(--section-spacing);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    color: var(--color-text-primary);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px var(--space-3);
+    font-size: var(--text-small);
+    font-weight: 500;
+    line-height: var(--leading-normal);
+    border: 1px solid var(--color-text-primary);
+    border-radius: 999px;
+  }
+
+  .button-primary {
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+  }
+
+  .block {
+    margin-bottom: var(--section-spacing);
+  }
+
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .package {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+
+  .package-name {
+    font-size: var(--text-lg);
+  }
+
+  .package-summary {
+    margin-bottom: var(--space-3);
+  }
+
+  .package-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .price-value {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+  }
+
+  .package-timeline {
+    margin: var(--space-2) 0;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .package-includes,
+  .terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-secondary);
+  }
+
+  .package-includes {
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+  }
+
+  .note {
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .work-item p {
+    margin-bottom: var(--space-1);
+  }
+
+  .work-links {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .process {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .process-step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-2);
+  }
+
+  .step-number {
+    padding-top: 2px;
+  }
+
+  .process-step p {
+    margin-bottom: 0;
+  }
+
+  .contact {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact-list dd {
+    margin: 0;
+  }
+
+  .colophon {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: var(--text-2xl);
+    }
+
+    .lead {
+      font-size: var(--text-h2);
+    }
+
+    .package {
+      padding: var(--space-3);
+    }
+
+    .packages {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -155,3 +155,34 @@ export type Statistics = {
   views: number;
   likes: number;
 };
+
+// Services (Freelance)
+export type ServiceBillingUnit = "project" | "month";
+
+export type ServicePackage = {
+  id: string;
+  name: string;
+  summary: string;
+  startingPrice: number; // IDR
+  billingUnit: ServiceBillingUnit;
+  timeline: string;
+  includes: string[];
+};
+
+export type ServiceProcessStep = {
+  title: string;
+  description: string;
+};
+
+export type ServicePolicy = {
+  id: string; // Used as the page anchor, e.g. /services#refund
+  title: string;
+  items: string[];
+};
+
+export type ServiceContact = {
+  email: string;
+  phone: string | null; // null hides it on the page
+  location: string;
+  responseTime: string;
+};
