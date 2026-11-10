@@ -2,7 +2,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import { defineConfig } from "astro/config";
+import { defineConfig, sessionDrivers } from "astro/config";
 
 // Pages that are reachable by direct link only (also marked noindex)
 const hiddenPages = ["/services"];
@@ -10,6 +10,13 @@ const hiddenPages = ["/services"];
 export default defineConfig({
   site: "https://ahargunyllib.dev",
   adapter: cloudflare(),
+  // The site doesn't use Astro sessions, so an in-memory driver is enough.
+  // Without an explicit driver the Cloudflare adapter adds a SESSION KV
+  // binding that wrangler inherits from the previous deployment, which breaks
+  // deploys once that namespace is gone.
+  session: {
+    driver: sessionDrivers.lruCache(),
+  },
   integrations: [
     mdx(),
     sitemap({
